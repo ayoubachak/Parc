@@ -1,6 +1,9 @@
 package parc.controller;
 
+import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import parc.model.LoginRequest;
+import parc.service.JwtUserDetailsService;
 import parc.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import parc.utils.JWTUtils;
 
 @RestController
 public class AuthController {
@@ -25,10 +29,11 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/token")
+    @PostMapping("/login")
     public String token(@RequestBody LoginRequest userLogin) throws AuthenticationException {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password()));
-        return tokenService.generateToken(authentication);
+        UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password());
+        Authentication authentication = authenticationManager.authenticate(userAuth);
+        return "{\"token\":\""+tokenService.generateToken(authentication)+"\"}" ;
     }
 
 }
