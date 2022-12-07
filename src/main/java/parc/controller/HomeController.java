@@ -9,8 +9,8 @@ import java.security.Principal;
 @RestController
 public class HomeController {
 
-    @GetMapping
-    public String home(Principal principal) {
+    @GetMapping("/hello")
+    public String hello(Principal principal) {
         return "Hello, " + principal.getName();
     }
 
@@ -19,4 +19,6 @@ public class HomeController {
     public String secure() {
         return "This is secured!";
     }
+
+
 }

@@ -30,6 +30,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import parc.service.JwtUserDetailsService;
 
+import java.util.Collection;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -65,7 +67,9 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests( auth -> auth
-                        .requestMatchers("/login").permitAll()
+                        // registration and login apis
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/user/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(jwtUserDetailsService)

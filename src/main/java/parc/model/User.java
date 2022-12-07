@@ -114,7 +114,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", profession='" + roles + '\'' +
+                ", roles='" + roles + '\'' +
                 ", createdOn=" + createdOn +
                 ", updatedOn=" + updatedOn +
                 ", lastloggedOn=" + lastloggedOn +

@@ -1,4 +1,4 @@
-package parc.model;
+package parc.model.requests;
 
 
 public record LoginRequest(String username, String password) {
