@@ -27,7 +27,6 @@ const Home = ()=>{
     const { isAuthenticated, user, logout } = useContext(AuthContext);
     // console.log("is authed ", isAuthenticated)
     if (!isAuthenticated) {
-        navigate('/login');
         return <Login/>;
     }
 

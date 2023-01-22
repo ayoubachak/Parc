@@ -1,8 +1,8 @@
 
 import Home from './scenes/home';
-import {AuthProvider} from "./hooks/AuthProvider";
-function App() {
+import {AuthContext, AuthProvider} from "./hooks/AuthProvider";
 
+function App() {
 
   return (
       <AuthProvider>
