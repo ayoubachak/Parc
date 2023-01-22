@@ -44,7 +44,8 @@ public class AuthController {
     public String token(@RequestBody LoginRequest userLogin) throws AuthenticationException {
         UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password());
         Authentication authentication = authenticationManager.authenticate(userAuth);
-        return "{\"token\":\""+tokenService.generateToken(authentication)+"\"}" ;
+        userLogin.username();
+        return "{\"user\":\""+userLogin.username()+"\",\"token\":\""+tokenService.generateToken(authentication)+"\"}" ;
     }
     // this is not fully working at all
     @PostMapping("/refresh")

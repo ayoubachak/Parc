@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import parc.model.User;
+import parc.model.requests.LoginRequest;
+import parc.model.requests.RegisterRequest;
 import parc.repository.UserRepository;
 import parc.service.TokenService;
 
@@ -32,16 +34,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public Map<String, Object> register(@ModelAttribute("user") User user){
+    public Map<String, Object> register(@RequestBody RegisterRequest request){
         HashMap<String, Object> response = new HashMap<>();
 
         // check if the user already exists
-        if(userRepository.existsByUsername(user.getUsername())){
+        if(userRepository.existsByUsername(request.username())){
             response.put("status", false);
-            response.put("msg", "User with name "+user.getUsername()+" already exists!");
+            response.put("msg", "User with name "+request.username()+" already exists!");
         }else{
             response.put("status",true);
-            User newUser = new User(user.getUsername(), passwordEncoder.encode(user.getPassword()), user.getName(), user.getLastname(), "USER");
+            User newUser = new User(request.username(), passwordEncoder.encode(request.password()), request.name(), request.lastname(), "USER");
             // saving the new user
             userRepository.save(newUser);
 

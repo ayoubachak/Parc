@@ -17,8 +17,8 @@ public class ParcApplication {
     @Bean
     CommandLineRunner commandLineRunner(UserRepository users, PasswordEncoder encoder) {
         return args -> {
-//            users.deleteAll();
-//            users.save(new User("ayoub.achak01@gmail.com",encoder.encode("ayoubachak"), "Ayoub", "Achak", "ADMIN,Directeur"));
+            users.deleteAll();
+            users.save(new User("ayoub.achak01@gmail.com",encoder.encode("ayoubachak"), "Ayoub", "Achak", "ADMIN,Directeur"));
         };
     }
 }
