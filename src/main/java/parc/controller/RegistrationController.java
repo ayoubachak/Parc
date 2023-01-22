@@ -53,8 +53,5 @@ public class RegistrationController {
         }
         return response;
     }
-    @GetMapping("/all")
-    public List<User> getAllUsers(){
-        return (List<User>) userRepository.findAll();
-    }
+
 }
