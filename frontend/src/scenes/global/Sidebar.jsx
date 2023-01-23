@@ -47,9 +47,6 @@ const Sidebar = ( name, lastname ) => {
 
     const { isAuthenticated, user} = useContext(AuthContext);
     const authAxios = useAuthRequest();
-    console.log(user)
-
-
 
 
     return (

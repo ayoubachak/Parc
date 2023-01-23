@@ -27,8 +27,8 @@ const Home = ()=>{
     const [theme, colorMode] = useMode();
     const [isSidebar, setIsSidebar] = useState(true);
     const  navigate = useNavigate();
-    const { isAuthenticated, user, logout } = useContext(AuthContext);
-    const authAxios = useAuthRequest();
+    const { isAuthenticated, user, logout, loading } = useContext(AuthContext);
+    // const authAxios = useAuthRequest();
     // this is an example
     // const [brandCount, setBrandCount] = useState(0);
     // useEffect(()=>{
@@ -41,11 +41,16 @@ const Home = ()=>{
     //     fetch()
     // }, [isAuthenticated, brandCount])
     // console.log("is authed ", isAuthenticated)
-    if (!isAuthenticated) {
-        return <Login/>;
+    useEffect(() => {
+        if(isAuthenticated === false){
+            navigate("/login");
+        }
+    }, [isAuthenticated, navigate]);
+
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
-else{
 
     return <>
 
@@ -79,7 +84,7 @@ else{
     </ThemeProvider>
 </ColorModeContext.Provider>
         </>
-    }
+
 
 }
 

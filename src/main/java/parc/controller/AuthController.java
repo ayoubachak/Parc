@@ -4,10 +4,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import parc.model.User;
 import parc.model.requests.LoginRequest;
-import parc.model.requests.RefreshRequest;
+import parc.model.requests.TokenResponse;
 import parc.service.JwtUserDetailsService;
 import parc.service.TokenService;
 import org.slf4j.Logger;
@@ -16,9 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -41,12 +38,19 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String token(@RequestBody LoginRequest userLogin) throws AuthenticationException {
+    @ResponseBody
+    public TokenResponse token(@RequestBody LoginRequest userLogin) throws AuthenticationException {
+        // Perform authentication
         UsernamePasswordAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userLogin.username(), userLogin.password());
         Authentication authentication = authenticationManager.authenticate(userAuth);
-        userLogin.username();
-        return "{\"user\":\""+userLogin.username()+"\",\"token\":\""+tokenService.generateToken(authentication)+"\"}" ;
+
+        // Generate token
+        String token = tokenService.generateToken(authentication);
+
+        // Return JSON response
+        return new TokenResponse(userLogin.username(), token);
     }
+
     // this is not fully working at all
     @PostMapping("/refresh")
     public String refreshToken(HttpServletRequest request) throws AuthenticationException{

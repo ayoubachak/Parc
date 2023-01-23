@@ -6,7 +6,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState({"name":"", "lastname":""});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,13 +30,18 @@ export const AuthProvider = ({ children }) => {
                 .then(data => {
                     // If the token is valid, set the authenticated state and user data
                     setIsAuthenticated(true);
+                    setLoading(false);
                     setUser(data);
                 })
                 .catch(error => {
                     console.error(error.message);
                     // If the token is not valid, remove it from local storage
                     localStorage.removeItem('token');
+                    setLoading(false)
                 });
+        } else {
+            setLoading(false);
+
         }
     }, []);
     const login = async (username, password) => {
@@ -57,6 +63,7 @@ export const AuthProvider = ({ children }) => {
             // Update the authenticated state and the user data
             setIsAuthenticated(true);
             setUser(user);
+            setLoading(false);
             navigate('/');
 
         } else {
@@ -76,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, loading, user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
