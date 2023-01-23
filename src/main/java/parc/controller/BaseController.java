@@ -1,12 +1,13 @@
 package parc.controller;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import parc.model.User;
 
 import java.util.List;
 
-@RequestMapping("/api")
+
 public class BaseController<T, R extends CrudRepository<T, Long>> {
 
     private R repository;
@@ -41,8 +42,8 @@ public class BaseController<T, R extends CrudRepository<T, Long>> {
     }
 
     @GetMapping("/count")
-    public long count() {
-        return repository.count();
+    public ResponseEntity<Long> count() {
+        return new ResponseEntity<>(repository.count(), HttpStatus.OK);
     }
 
 }

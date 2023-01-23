@@ -12,11 +12,29 @@ import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import {AuthContext} from "../../hooks/AuthProvider";
+import {useContext, useEffect, useState} from "react";
+import useAuthRequest from "../../hooks/useAuthRequest";
 
+import { createEmployeeService } from '../../services/services';
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { isAuthenticated, user} = useContext(AuthContext);
+  const authAxios = useAuthRequest();
+  const [employeeCount, setEmployeeCount] = useState(0);
 
+
+  // }, [isAuthenticated, brandCount])
+  useEffect(()=>{
+        const empService = createEmployeeService(authAxios);
+        const fetchData =async ()=>{
+            const response = await empService.count();
+            setEmployeeCount(response.data);
+            console.log("Employee Count ", employeeCount);
+        }
+        fetchData()
+        },[isAuthenticated, employeeCount])
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -93,7 +111,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
+            title={employeeCount}
             subtitle="New Clients"
             progress="0.30"
             increase="+5%"

@@ -16,6 +16,10 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import {createUserService} from "../../services/services";
+import useAuthRequest from "../../hooks/useAuthRequest";
+import {useEffect, useContext}  from "react";
+import {AuthContext} from "../../hooks/AuthProvider";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -35,13 +39,20 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ( name, lastname ) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  return (
+    const { isAuthenticated, user} = useContext(AuthContext);
+    const authAxios = useAuthRequest();
+    console.log(user)
+
+
+
+
+    return (
     <Box
       sx={{
         "& .pro-sidebar-inner": {
@@ -107,7 +118,7 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ayoub Achak
+                  {user.name + " "+ user.lastname}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   VP Fancy Admin

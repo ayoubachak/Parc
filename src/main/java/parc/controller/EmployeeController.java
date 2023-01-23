@@ -6,7 +6,7 @@ import parc.model.concrete.Employee;
 import parc.repository.EmployeeRepository;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api/employees")
 public class EmployeeController extends BaseController<Employee, EmployeeRepository> {
 
     private final EmployeeRepository repository;

@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,7 +13,29 @@ export const AuthProvider = ({ children }) => {
         // Check for the presence of the token in local storage on initial render
         const token = localStorage.getItem('token');
         if (token) {
-            setIsAuthenticated(true);
+            // Verify the token with the server
+            fetch('http://localhost:8080/user/me', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error(response.statusText);
+                    }
+                })
+                .then(data => {
+                    // If the token is valid, set the authenticated state and user data
+                    setIsAuthenticated(true);
+                    setUser(data);
+                })
+                .catch(error => {
+                    console.error(error.message);
+                    // If the token is not valid, remove it from local storage
+                    localStorage.removeItem('token');
+                });
         }
     }, []);
     const login = async (username, password) => {
@@ -35,6 +58,7 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(true);
             setUser(user);
             navigate('/');
+
         } else {
             // Handle the error
             const error = await response.json();

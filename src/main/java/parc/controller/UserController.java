@@ -24,8 +24,8 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/add")
-    public User addUser(@RequestBody User brand) {
-        return userRepository.save(brand);
+    public User addUser(@RequestBody User user) {
+        return userRepository.save(user);
     }
 
     @DeleteMapping("/del/{id}")

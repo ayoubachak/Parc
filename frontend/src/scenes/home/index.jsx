@@ -19,12 +19,27 @@ import { useContext } from 'react';
 
 import { Router } from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
+import useAuthRequest from '../../hooks/useAuthRequest';
+import { createBrandService } from '../../services/services';
+
 
 const Home = ()=>{
     const [theme, colorMode] = useMode();
     const [isSidebar, setIsSidebar] = useState(true);
     const  navigate = useNavigate();
     const { isAuthenticated, user, logout } = useContext(AuthContext);
+    const authAxios = useAuthRequest();
+    // this is an example
+    // const [brandCount, setBrandCount] = useState(0);
+    // useEffect(()=>{
+    //     const brandService = createBrandService(authAxios);
+    //     const fetch =async ()=>{
+    //         const response = await brandService.count();
+    //         setBrandCount(response.data);
+    //         console.log("brandCount ", brandCount);
+    //     }
+    //     fetch()
+    // }, [isAuthenticated, brandCount])
     // console.log("is authed ", isAuthenticated)
     if (!isAuthenticated) {
         return <Login/>;
