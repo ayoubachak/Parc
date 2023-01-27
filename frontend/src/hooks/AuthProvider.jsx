@@ -65,6 +65,7 @@ export const AuthProvider = ({ children }) => {
             setUser(user);
             setLoading(false);
             navigate('/');
+            window.location.reload();
 
         } else {
             // Handle the error
@@ -80,6 +81,8 @@ export const AuthProvider = ({ children }) => {
         // Update the authenticated state and the user data
         setIsAuthenticated(false);
         setUser(null);
+        navigate('/')
+        window.location.reload();
     }
 
     return (

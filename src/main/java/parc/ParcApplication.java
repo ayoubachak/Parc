@@ -15,7 +15,10 @@ public class ParcApplication {
         SpringApplication.run(ParcApplication.class, args);
     }
     @Bean
-    CommandLineRunner commandLineRunner(UserRepository users, PasswordEncoder encoder) {
+    CommandLineRunner commandLineRunner(
+            UserRepository users,
+            PasswordEncoder encoder
+    ) {
         return args -> {
 //            users.deleteAll();
 //            users.save(new User("ayoub.achak01@gmail.com",encoder.encode("ayoubachak"), "Ayoub", "Achak", "ADMIN,Directeur"));

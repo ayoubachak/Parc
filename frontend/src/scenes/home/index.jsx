@@ -41,15 +41,6 @@ const Home = ()=>{
     //     fetch()
     // }, [isAuthenticated, brandCount])
     // console.log("is authed ", isAuthenticated)
-    useEffect(() => {
-        if(isAuthenticated === false){
-            navigate("/login");
-        }
-    }, [isAuthenticated, navigate]);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
 
 
     return <>

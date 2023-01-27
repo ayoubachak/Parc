@@ -25,20 +25,6 @@ const Dashboard = () => {
   const [employeeCount, setEmployeeCount] = useState(0);
 
 
-  // }, [isAuthenticated, brandCount])
-  useEffect(()=>{
-      if(isAuthenticated){
-          const empService = createEmployeeService(authAxios);
-          const fetchData =async ()=>{
-              const response = await empService.count();
-              setEmployeeCount(response.data);
-              console.log("Employee Count ", employeeCount);
-
-          }
-          fetchData()
-      }
-
-        },[isAuthenticated, employeeCount])
   return (
     <Box m="20px">
       {/* HEADER */}

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 
+import useAuth from '../../hooks/useAuth';
 import { AuthContext } from '../../hooks/AuthProvider';
 import {Box, Button, TextField} from "@mui/material";
 // import Header from "../../components/Header";
@@ -7,14 +8,17 @@ import { Typography } from '@mui/material';
 import {Formik} from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
-    const { login } = useContext(AuthContext);
+    const {  login } = useAuth();
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
 
     const handleSubmit = async (values) => {
         // event.preventDefault();
