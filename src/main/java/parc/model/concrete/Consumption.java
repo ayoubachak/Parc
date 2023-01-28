@@ -11,11 +11,22 @@ public class Consumption {
     @Column(name = "id", nullable = false)
     private Long id;
     private LocalDateTime date;
-    private int distance;
+    private double distance;
     private float price;
     private float volume; // in litter
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     private FuelCompany fuelCompany;
+
+    public Consumption(){}
+    public Consumption(Long i, LocalDateTime date, double distance, float price, float volume, FuelCompany fuelCompany) {
+        this.id=i;
+        this.date = date;
+        this.distance = distance;
+        this.price = price;
+        this.volume = volume;
+        this.fuelCompany = fuelCompany;
+
+    }
 
     public Long getId() {
         return id;
@@ -33,7 +44,7 @@ public class Consumption {
         this.date = date;
     }
 
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 

@@ -2,6 +2,10 @@ package parc.model.concrete;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 public class Employee {
     @Id
@@ -10,10 +14,25 @@ public class Employee {
     private Long id;
     private String function;
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "service_id")
     private Service service;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<MissionOrder> missionOrders = new HashSet<>();
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "employee_order_mission",
+            joinColumns = @JoinColumn(name = "employee_id",unique = false),
+            inverseJoinColumns = @JoinColumn(name = "order_mission_id",unique = false))
+    private Set<MissionOrder> orderMissions;
+    public Employee(){}
+    public Employee(Long id, String function, String name, Service service,Set<MissionOrder> missionOrders) {
+        this.id = id;
+        this.function = function;
+        this.name = name;
+        this.service = service;
+        this.orderMissions = missionOrders;
+    }
     public Long getId() {
         return id;
     }

@@ -14,10 +14,21 @@ public class Reparation {
     private int distance;
     private LocalDateTime reparationDate;
     private String reparationReference;
-    @OneToOne
+
+    public Reparation() {}
+
+    @OneToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "reparation_details_id")
     private ReparationDetails reparationDetails;
 
+    public Reparation(Long id, String bill, Integer distance, LocalDateTime reparationDate, String reparationReference, ReparationDetails reparationDetails) {
+        this.id = id;
+        this.bill = bill;
+        this.distance = distance;
+        this.reparationDate = reparationDate;
+        this.reparationReference = reparationReference;
+        this.reparationDetails = reparationDetails;
+    }
     public Long getId() {
         return id;
     }

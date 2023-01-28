@@ -10,6 +10,12 @@ public class Piece {
     private Long id;
     private String name;
 
+    public Piece() {}
+    public Piece(Long id,String name) {
+        this.id=id;
+        this.name=name;
+    }
+
     public Long getId() {
         return id;
     }

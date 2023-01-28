@@ -12,9 +12,18 @@ public class ReparationDetails {
     private Long id;
     private float price;
     private String type;
-    @OneToMany
+
+    public ReparationDetails() {}
+    public ReparationDetails(Long id,float price,String type) {
+        this.id=id;
+        this.price=price;
+        this.type=type;
+    }
+    @OneToMany(cascade = { CascadeType.ALL })
     private List<Piece> pieces;
 
+    @OneToOne(mappedBy = "reparationDetails",cascade = { CascadeType.ALL } )
+    private Reparation reparation;
     public Long getId() {
         return id;
     }

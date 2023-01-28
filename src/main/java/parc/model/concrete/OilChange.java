@@ -12,6 +12,12 @@ public class OilChange {
     private Long id;
     private LocalDateTime oilChangedAt;
     private float distance;
+    public OilChange() {}
+    public OilChange(Long id,int distance,LocalDateTime oil_changed_at) {
+        this.id=id;
+        this.distance=distance;
+        this.oilChangedAt=oil_changed_at;
+    }
 
     public Long getId() {
         return id;

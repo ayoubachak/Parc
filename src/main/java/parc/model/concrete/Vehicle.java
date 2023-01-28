@@ -3,6 +3,7 @@ package parc.model.concrete;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Vehicle {
@@ -16,26 +17,71 @@ public class Vehicle {
     private int numchairs;
     private float power;
     private int vehkm;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     private BrandModel brandModel;
-    @OneToMany
+    @OneToMany(cascade = { CascadeType.ALL })
     @JoinColumn(name = "consumption_id")
     private List<Consumption> consumption;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     private FuelType fuelType;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     private Category category;
-    @OneToMany
+    @OneToMany(cascade = { CascadeType.ALL })
     @JoinColumn(name = "missionorder_id")
     private List<MissionOrder> missionOrder;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     private Service service;
-    @OneToMany
-    private List<VehicleState> vehicleState;
-    @ManyToOne
+
+    @ManyToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "reparation_id")
     private Reparation reparation;
 
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "vehicle_order_mission", joinColumns = { @JoinColumn(name = "vehicle_id",unique = false) }, inverseJoinColumns = {
+            @JoinColumn(name = "order_mission_id",unique = false) })
+    private Set<MissionOrder> orderMissions;
+
+    @ManyToMany(
+            cascade = {CascadeType.ALL})
+    @JoinTable(name = "vehicle_vehicle_state",
+            joinColumns = { @JoinColumn(name = "vehicle_id",unique = false) },
+            inverseJoinColumns = { @JoinColumn(name = "vehicle_state_id",unique = false) })
+    private Set<VehicleState> vehicleStates;
+
+    public Vehicle(){}
+
+    public Set<MissionOrder> getOrderMissions() {
+        return orderMissions;
+    }
+
+    public void setOrderMissions(Set<MissionOrder> orderMissions) {
+        this.orderMissions = orderMissions;
+    }
+
+//    public Set<VehicleState> getVehicleStates() {
+//        return vehicleStates;
+//    }
+//
+//    public void setVehicleStates(Set<VehicleState> vehicleStates) {
+//        this.vehicleStates = vehicleStates;
+//    }
+
+    public Vehicle(Long id, String color, String license, String model, int numChairs, int power, int vehkm, BrandModel brandModel, Category category, FuelType fuelType, Reparation reparation, Service service, Set<VehicleState> vehicleState, Set<MissionOrder> orderMissions) {
+        this.id = id;
+        this.color = color;
+        this.liscence = license;
+        this.model = model;
+        this.numchairs = numChairs;
+        this.power = power;
+        this.vehkm = vehkm;
+        this.brandModel = brandModel;
+        this.category = category;
+        this.fuelType = fuelType;
+        this.reparation = reparation;
+        this.service = service;
+        this.orderMissions = orderMissions;
+//        this.vehicleStates = vehicleState;
+    }
     public Long getId() {
         return id;
     }
@@ -140,13 +186,13 @@ public class Vehicle {
         this.service = service;
     }
 
-    public List<VehicleState> getVehicleState() {
-        return vehicleState;
-    }
-
-    public void setVehicleState(List<VehicleState> vehicleState) {
-        this.vehicleState = vehicleState;
-    }
+//    public Set<VehicleState> getVehicleState() {
+//        return vehicleStates;
+//    }
+//
+//    public void setVehicleState(Set<VehicleState> vehicleState) {
+//        this.vehicleStates = vehicleState;
+//    }
 
     public Reparation getReparation() {
         return reparation;

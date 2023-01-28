@@ -10,6 +10,12 @@ public class FuelType {
     private Long id;
     private String name;
 
+    public FuelType(){}
+    public FuelType(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 
     public Long getId() {
         return id;

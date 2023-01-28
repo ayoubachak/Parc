@@ -33,3 +33,6 @@ build/
 .vscode/
 
 .gpt
+
+
+yarn.lock

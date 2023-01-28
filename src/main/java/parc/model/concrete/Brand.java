@@ -2,6 +2,8 @@ package parc.model.concrete;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Brand {
     @Id
@@ -9,6 +11,14 @@ public class Brand {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    private Set<BrandModel> brandModels;
+    public Brand(){}
+    public Brand(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Long getId() {
         return id;

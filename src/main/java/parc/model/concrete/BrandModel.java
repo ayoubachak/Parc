@@ -9,9 +9,16 @@ public class BrandModel {
     @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.ALL })
     private Brand brand;
 
+    public  BrandModel(){}
+
+    public BrandModel(Long id, String name, Brand brand) {
+        this.id = id;
+        this.name = name;
+        this.brand = brand;
+    }
     public Long getId() {
         return id;
     }
