@@ -6,7 +6,7 @@ import parc.model.concrete.BrandModel;
 import parc.repository.BrandModelRepository;
 
 @RestController
-@RequestMapping("/api/brandmodels")
+@RequestMapping("/api/brandModels")
 public class BrandModelController extends BaseController<BrandModel, BrandModelRepository> {
 
     private final BrandModelRepository repository;

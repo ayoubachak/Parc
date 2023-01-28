@@ -16,6 +16,11 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
+import FlightOutlinedIcon from "@mui/icons-material/FlightOutlined";
+import Battery50OutlinedIcon from "@mui/icons-material/Battery50Outlined";
+
 import {createUserService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import {useEffect, useContext}  from "react";
@@ -118,7 +123,7 @@ const Sidebar = ( name, lastname ) => {
                   {user.name + " "+ user.lastname}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
+                  Admin
                 </Typography>
               </Box>
             </Box>
@@ -140,26 +145,55 @@ const Sidebar = ( name, lastname ) => {
             >
               Data
             </Typography>
+            {/*<Item*/}
+            {/*  title="Manage Team"*/}
+            {/*  to="/team"*/}
+            {/*  icon={<PeopleOutlinedIcon />}*/}
+            {/*  selected={selected}*/}
+            {/*  setSelected={setSelected}*/}
+            {/*/>*/}
+            {/*<Item*/}
+            {/*  title="Contacts Information"*/}
+            {/*  to="/contacts"*/}
+            {/*  icon={<ContactsOutlinedIcon />}*/}
+            {/*  selected={selected}*/}
+            {/*  setSelected={setSelected}*/}
+            {/*/>*/}
+            {/*<Item*/}
+            {/*  title="Invoices Balances"*/}
+            {/*  to="/invoices"*/}
+            {/*  icon={<ReceiptOutlinedIcon />}*/}
+            {/*  selected={selected}*/}
+            {/*  setSelected={setSelected}*/}
+            {/*/>*/}
+
             <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Vehicles"
+                to="/vehicles"
+                icon={<DirectionsCarOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Contacts Information"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Employees"
+                to="/employees"
+                icon={<GroupOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
-              to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
+                title="Missions"
+                to="/missions"
+                icon={<FlightOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+            />
+            <Item
+                title="Consumptions"
+                to="/consumptions"
+                icon={<Battery50OutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
 
             <Typography

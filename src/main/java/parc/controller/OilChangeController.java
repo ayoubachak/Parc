@@ -6,7 +6,7 @@ import parc.model.concrete.OilChange;
 import parc.repository.OilChangeRepository;
 
 @RestController
-@RequestMapping("/api/oilchange")
+@RequestMapping("/oilChanges")
 public class OilChangeController extends BaseController<OilChange, OilChangeRepository> {
 
     private final OilChangeRepository repository;

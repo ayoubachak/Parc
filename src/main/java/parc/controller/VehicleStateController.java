@@ -6,7 +6,7 @@ import parc.model.concrete.VehicleState;
 import parc.repository.VehicleStateRepository;
 
 @RestController
-@RequestMapping("/api/vehiclestate")
+@RequestMapping("/api/vehicleStates")
 public class VehicleStateController extends BaseController<VehicleState, VehicleStateRepository> {
 
     private final VehicleStateRepository repository;

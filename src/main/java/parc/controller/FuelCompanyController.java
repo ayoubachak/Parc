@@ -6,7 +6,7 @@ import parc.model.concrete.FuelCompany;
 import parc.repository.FuelCompanyRepository;
 
 @RestController
-@RequestMapping("/api/fuelcompany")
+@RequestMapping("/api/fuelCompanies")
 public class FuelCompanyController extends BaseController<FuelCompany, FuelCompanyRepository> {
 
     private final FuelCompanyRepository repository;

@@ -25,11 +25,12 @@ public class MissionOrder {
     private Employee remplacementEmployee;
     private String type;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(name = "vehicle_order_mission",
-            joinColumns = @JoinColumn(name = "order_mission_id",unique = false),
-            inverseJoinColumns = @JoinColumn(name = "vehicle_id",unique = false))
-    private Set<Vehicle> vehicles;
+    // this only needs to be on one of the classes because it's causing trouble in the getAll request, it tries to get them recursively and the server breaks.
+//    @ManyToMany(cascade = { CascadeType.ALL })
+//    @JoinTable(name = "vehicle_order_mission",
+//            joinColumns = @JoinColumn(name = "order_mission_id",unique = false),
+//            inverseJoinColumns = @JoinColumn(name = "vehicle_id",unique = false))
+//    private Set<Vehicle> vehicles;
 
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(name = "employee_order_mission",
@@ -104,18 +105,18 @@ public class MissionOrder {
         this.startDate = startDate;
         this.type = type;
         this.remplacementEmployee = replacementEmployee;
-        this.vehicles=vehicles;
+//        this.vehicles=vehicles;
         this.employees=employees;
 
     }
 
-    public Set<Vehicle> getVehicles() {
-        return vehicles;
-    }
+//    public Set<Vehicle> getVehicles() {
+//        return vehicles;
+//    }
 
-    public void setVehicles(Set<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
+//    public void setVehicles(Set<Vehicle> vehicles) {
+//        this.vehicles = vehicles;
+//    }
 
     public Set<Employee> getEmployees() {
         return employees;

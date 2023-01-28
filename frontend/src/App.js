@@ -17,7 +17,10 @@ import RequireAuth from "./components/RequireAuth";
 import Wrapper from "./components/Wrapper";
 import useAuth from "./hooks/useAuth";
 
-
+import Vehicles from "./scenes/vehicles";
+import Missions from "./scenes/order_missions";
+import Employees from "./scenes/employees";
+import Consumptions from "./scenes/consumptions";
 
 function App() {
     const {isAuthenticated} = useAuth()
@@ -33,11 +36,16 @@ function App() {
                 <Route path='/login' element={<Login/>} />
                 <Route element={<RequireAuth/>} >
                     <Route path="/" element={<Dashboard />} />
-                    <Route path="/team" element={<Team />} />
-                    <Route path="/contacts" element={<Contacts />} />
-                    <Route path="/invoices" element={<Invoices />} />
+                    {/*<Route path="/team" element={<Team />} />*/}
+                    {/*<Route path="/contacts" element={<Contacts />} />*/}
+                    {/*<Route path="/invoices" element={<Invoices />} />*/}
                     <Route path="/calendar" element={<Calendar />} />
                     <Route path="/geography" element={<Geography />} />
+                    <Route path="/vehicles" element={<Vehicles />} />
+                    <Route path="/employees" element={<Employees />} />
+                    <Route path="/missions" element={<Missions />} />
+                    <Route path="/consumptions" element={<Consumptions />} />
+
                 </Route>
             </Routes>
         </Wrapper>

@@ -1,6 +1,16 @@
 
 
-
+/*
+* Fun Fact: not all the APIs are tested :), I don't have time to test them all.
+* I could just start testing them all, but after I made the BaseController, I tought that I can just map all the controller by extending them from the base controller. but it did not work like so.
+* Something interesting happens tho is that the name is getting mapped directly depending on the name of the model:
+* - for example if the name of the mode is Brand, all the endpoints will be mapped to /brands (it makes it lowercase and automatically makes it plural )
+* - here are some other examples : * Category -> /categories
+*                                  * BrandModel -> /brandModels
+*                                  * ReparationDetails -> /reparationDetailses ( it's not that smart after all XD )
+*                                  * etc...
+*
+* */
 
 const baseURL = 'http://localhost:8080';
 
@@ -42,12 +52,12 @@ export function createCategoryService(authAxios) {
 
 export function createBrandModelService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/brandmodels`),
-        add: async (brandModel) => await authAxios.post(`${baseURL}/brandmodels`, brandModel),
-        update: async (id, brandModel) => await authAxios.put(`${baseURL}/brandmodels/${id}`, brandModel),
-        delete: async (id) => await authAxios.delete(`${baseURL}/brandmodels/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/brandmodels/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/brandmodels/count`),
+        getAll: async () => await authAxios.get(`${baseURL}/brandModels`),
+        add: async (brandModel) => await authAxios.post(`${baseURL}/brandModels`, brandModel),
+        update: async (id, brandModel) => await authAxios.put(`${baseURL}/brandModels/${id}`, brandModel),
+        delete: async (id) => await authAxios.delete(`${baseURL}/brandModels/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/brandModels/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/brandModels/count`),
 
     }
 }
@@ -58,8 +68,8 @@ export function createConsumptionService(authAxios) {
         update: async (id, consumption) => await authAxios.put(`${baseURL}/consumptions/${id}`, consumption),
         delete: async (id) => await authAxios.delete(`${baseURL}/consumptions/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/consumptions/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/consumptions/count`)
-
+        count: async () => await authAxios.get(`${baseURL}/api/consumptions/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/consumptions/all`)
     }
 }
 export function createEmployeeService(authAxios) {
@@ -69,52 +79,54 @@ export function createEmployeeService(authAxios) {
         update: async (id, employee) => await authAxios.put(`${baseURL}/employees/${id}`, employee),
         delete: async (id) => await authAxios.delete(`${baseURL}/employees/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/employees/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/employees/count`)
+        count: async () => await authAxios.get(`${baseURL}/api/employees/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/employees/all`)
 
     }
 }
 export function createFuelCompanyService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/fuelcompanies`),
-        add: async (fuelCompany) => await authAxios.post(`${baseURL}/fuelcompanies`, fuelCompany),
-        update: async (id, fuelCompany) => await authAxios.put(`${baseURL}/fuelcompanies/${id}`, fuelCompany),
-        delete: async (id) => await authAxios.delete(`${baseURL}/fuelcompanies/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/fuelcompanies/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/fuelcompanies/count`),
+        getAll: async () => await authAxios.get(`${baseURL}/fuelCompanies`),
+        add: async (fuelCompany) => await authAxios.post(`${baseURL}/fuelCompanies`, fuelCompany),
+        update: async (id, fuelCompany) => await authAxios.put(`${baseURL}/fuelCompanies/${id}`, fuelCompany),
+        delete: async (id) => await authAxios.delete(`${baseURL}/fuelCompanies/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/fuelCompanies/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/fuelCompanies/count`),
 
     }
 }
 export function createFuelTypeService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/fueltypes`),
-        add: async (fuelType) => await authAxios.post(`${baseURL}/fueltypes`, fuelType),
-        update: async (id, fuelType) => await authAxios.put(`${baseURL}/fueltypes/${id}`, fuelType),
-        delete: async (id) => await authAxios.delete(`${baseURL}/fueltypes/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/fueltypes/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/fueltypes/count`)
+        getAll: async () => await authAxios.get(`${baseURL}/fuelTypes`),
+        add: async (fuelType) => await authAxios.post(`${baseURL}/fuelTypes`, fuelType),
+        update: async (id, fuelType) => await authAxios.put(`${baseURL}/fuelTypes/${id}`, fuelType),
+        delete: async (id) => await authAxios.delete(`${baseURL}/fuelTypes/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/fuelTypes/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/fuelTypes/count`)
 
     }
 }
 export function createMissionOrderService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/missionorders`),
-        add: async (missionOrder) => await authAxios.post(`${baseURL}/missionorders`, missionOrder),
-        update: async (id, missionOrder) => await authAxios.put(`${baseURL}/missionorders/${id}`, missionOrder),
-        delete: async (id) => await authAxios.delete(`${baseURL}/missionorders/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/missionorders/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/missionorders/count`)
+        getAll: async () => await authAxios.get(`${baseURL}/missionOrders`),
+        add: async (missionOrder) => await authAxios.post(`${baseURL}/missionOrders`, missionOrder),
+        update: async (id, missionOrder) => await authAxios.put(`${baseURL}/missionOrders/${id}`, missionOrder),
+        delete: async (id) => await authAxios.delete(`${baseURL}/missionOrders/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/missionOrders/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/missionOrders/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/missionOrders/all`)
 
     }
 }
 
 export function createOilChangeService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/oilchanges`),
-        add: async (oilchange) => await authAxios.post(`${baseURL}/oilchanges`, oilchange),
-        update: async (id, oilchange) => await authAxios.put(`${baseURL}/oilchanges/${id}`, oilchange),
-        delete: async (id) => await authAxios.delete(`${baseURL}/oilchanges/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/oilchanges/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/oilchanges/count`),
+        getAll: async () => await authAxios.get(`${baseURL}/oilChanges`),
+        add: async (oilchange) => await authAxios.post(`${baseURL}/oilChanges`, oilchange),
+        update: async (id, oilchange) => await authAxios.put(`${baseURL}/oilChanges/${id}`, oilchange),
+        delete: async (id) => await authAxios.delete(`${baseURL}/oilChanges/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/oilChanges/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/oilChanges/count`),
 
     }
 }
@@ -143,12 +155,12 @@ export function createReparationService(authAxios) {
 
 export function createReparationDetailsService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/reparationdetails`),
-        add: async (reparationdetails) => await authAxios.post(`${baseURL}/reparationdetails`, reparationdetails),
-        update: async (id, reparationdetails) => await authAxios.put(`${baseURL}/reparationdetails/${id}`, reparationdetails),
-        delete: async (id) => await authAxios.delete(`${baseURL}/reparationdetails/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/reparationdetails/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/reparationdetails/count`),
+        getAll: async () => await authAxios.get(`${baseURL}/reparationDetailses`),
+        add: async (reparationdetails) => await authAxios.post(`${baseURL}/reparationDetailses`, reparationdetails),
+        update: async (id, reparationdetails) => await authAxios.put(`${baseURL}/reparationDetailses/${id}`, reparationdetails),
+        delete: async (id) => await authAxios.delete(`${baseURL}/reparationDetailses/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/reparationDetailses/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/reparationDetailses/count`),
 
     }
 }
@@ -172,19 +184,20 @@ export function createVehicleService(authAxios) {
         update: async (id, vehicle) => await authAxios.put(`${baseURL}/vehicles/${id}`, vehicle),
         delete: async (id) => await authAxios.delete(`${baseURL}/vehicles/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/vehicles/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/vehicles/count`)
+        count: async () => await authAxios.get(`${baseURL}/api/vehicles/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/vehicles/all`)
 
     }
 }
 
 export function createVehicleStateService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/vehiclestates`),
-        add: async (vehiclestate) => await authAxios.post(`${baseURL}/vehiclestates`, vehiclestate),
-        update: async (id, vehiclestate) => await authAxios.put(`${baseURL}/vehiclestates/${id}`, vehiclestate),
-        delete: async (id) => await authAxios.delete(`${baseURL}/vehiclestates/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/vehiclestates/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/vehiclestates/count`)
+        getAll: async () => await authAxios.get(`${baseURL}/vehicleStates`),
+        add: async (vehiclestate) => await authAxios.post(`${baseURL}/vehicleStates`, vehiclestate),
+        update: async (id, vehiclestate) => await authAxios.put(`${baseURL}/vehicleStates/${id}`, vehiclestate),
+        delete: async (id) => await authAxios.delete(`${baseURL}/vehicleStates/${id}`),
+        get: async (id) => await authAxios.get(`${baseURL}/vehicleStates/${id}`),
+        count: async () => await authAxios.get(`${baseURL}/api/vehicleStates/count`)
 
     }
 }
