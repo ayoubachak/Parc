@@ -1,7 +1,14 @@
-import {useEffect, useState} from "react";
-import useAuth from "../../hooks/useAuth";
 
+const getData = async  (missionOrderService)=>{
+    const response = await missionOrderService.all()
+    const missionsMapped = [...response.data];
+    missionsMapped.map((mission) =>{
+        mission.employee = mission.employee.name + " ("+mission.employee.id+")";
+        mission.remplacementEmployee = mission.remplacementEmployee.name;
+        return mission
+    })
+    return missionsMapped;
 
-const getData = ()=>{}
+}
 
 export default getData;

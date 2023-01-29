@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import {useEffect, useState} from "react";
 import {createConsumptionService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
+import getData from "./data";
 
 const Consumptions = () => {
   const theme = useTheme();
@@ -18,14 +19,8 @@ const Consumptions = () => {
     useEffect(() => {
         const fetchData = async () =>{
             setIsLoading(true);
-            const response = await consumptionService.all()
-            const consumptionsMapped = [...response.data];
-            consumptionsMapped.map((consumption) =>{
-                consumption.fuelCompany = consumption.fuelCompany?.name;
-                return consumption
-
-            })
-            setConsumptions(consumptionsMapped);
+            const data = await getData(consumptionService);
+            setConsumptions(data);
             setIsLoading(false);
 
         }

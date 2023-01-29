@@ -6,28 +6,25 @@ import Header from "../../components/Header";
 import {useEffect, useState} from "react";
 import {createMissionOrderService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
+import getData from "./data";
 
-const Missions = () => {
+const Missions = (props) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const {data} = props;
+    const [missions, setMissions] = useState(data);
+    const [isLoading, setIsLoading] = useState(true);
     const authAxios = useAuthRequest('http://localhost:8080/');
     const missionOrderService = createMissionOrderService(authAxios);
-    const [missions, setMissions] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () =>{
-            setIsLoading(true);
-            const response = await missionOrderService.all()
-            const missionsMapped = [...response.data];
-            missionsMapped.map((mission) =>{
-                mission.employee = mission.employee.name;
-                mission.remplacementEmployee = mission.remplacementEmployee.name;
-                return mission
-
-            })
-            setMissions(missionsMapped);
-            setIsLoading(false);
+            if(!data || data.length === 0){
+                setIsLoading(true);
+                const data = await getData(missionOrderService)
+                setMissions(data);
+                setIsLoading(false);
+            }
 
         }
         fetchData();
@@ -115,5 +112,8 @@ const Missions = () => {
         </Box>
     );
 };
+Missions.defaultProps = {
+    data: []
+}
 
 export default Missions;

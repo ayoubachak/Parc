@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, IconButton, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
@@ -10,40 +10,46 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
+import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import {useNavigate} from "react-router-dom";
+import {getData} from "./data";
 
 const Employees = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const authAxios = useAuthRequest('http://localhost:8080/');
   const employeeService = createEmployeeService(authAxios);
+    const navigate =  useNavigate();
+
     const [employees, setEmployees] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const handleRowClick = (params) => {
+        // navigate to /employee/{id}
+        const id = params.row.id;
+        navigate("/employee/"+id);
+    }
 
     useEffect(() => {
         const fetchData = async () =>{
             setIsLoading(true);
-            const response = await employeeService.all()
-            const employeesMapped = [...response.data];
-            employeesMapped.map((employee) =>{
-                employee.service = employee.service?.id;
-                employee.func = employee.function;
-                return employee
-
-            })
-            setEmployees(employeesMapped);
+            const data = await getData(employeeService);
+            setEmployees(data);
             setIsLoading(false);
 
         }
         fetchData();
     }, []);
 
-    // id:employee.id,
-    // employee:employee.employee?.name,
-    // startDate:employee.startDate,
-    // endDate:employee.endDate,
-    // missionSubject:employee.missionSubject,
-    // remplacementEmployee:employee.remplacementEmployee?.name, // shit that's a typo 🙈
-    // type:employee.type
+    const handleDelete = (row)=>{
+        console.log("deleting..")
+        console.log(row)
+    }
+    const handleEdit = (row)=>{
+        console.log("editing..")
+        console.log(row)
+    }
 
     const columns = [
     { field: "id", headerName: "ID" },
@@ -91,6 +97,21 @@ const Employees = () => {
             );
         },
     },
+    {
+        field: "actions",
+        headerName: "Actions",
+        flex: 0,
+        renderCell: (params) => (
+            <Box display="flex" justifyContent="space-between">
+                <IconButton onClick={() => handleDelete(params.row)}>
+                    <RemoveOutlinedIcon />
+                </IconButton>
+                <IconButton onClick={() => handleEdit(params.row)}>
+                    <ModeEditOutlineOutlinedIcon />
+                </IconButton>
+            </Box>
+        ),
+    },
 
 
   ];
@@ -129,7 +150,13 @@ const Employees = () => {
             }}
           >
           {isLoading ? <p>Loading...</p> :<>
-            <DataGrid checkboxSelection rows={employees} columns={columns} />
+            <DataGrid
+                checkboxSelection
+                rows={employees}
+                columns={columns}
+                onRowClick={handleRowClick}
+
+            />
           </>
           }
           </Box>

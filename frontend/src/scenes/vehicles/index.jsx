@@ -4,8 +4,9 @@ import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import {useEffect, useState} from "react";
-import {createVehicleService} from "../../services/services";
+import {createMissionOrderService, createVehicleService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
+import getData from "./data";
 
 const Vehicles = () => {
     const theme = useTheme();
@@ -15,29 +16,13 @@ const Vehicles = () => {
     const [vehicles, setVehicles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
         const fetchData = async () =>{
             setIsLoading(true);
-            const response = await vehicleService.all()
-            const vehiclesMapped = [...response.data];
-            vehiclesMapped.map((vehicle) =>{
-                vehicle.brandmodel = vehicle?.brandModel?.name;
-                vehicle.brand = vehicle?.brandModel?.brand?.name;
-                vehicle.fuelType = vehicle.fuelType.name;
-                vehicle.category = vehicle.category.name;
-                // id
-                // color
-                // liscence
-                // model
-                // numchairs
-                // power
-                // vehkm
-                return vehicle
-
-            })
-            setVehicles(vehiclesMapped);
+            const data = await getData(vehicleService)
+            setVehicles(data);
             setIsLoading(false);
-
         }
         fetchData();
     }, []);

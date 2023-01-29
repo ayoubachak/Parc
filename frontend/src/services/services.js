@@ -69,7 +69,9 @@ export function createConsumptionService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/consumptions/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/consumptions/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/consumptions/count`),
-        all: async () => await authAxios.get(`${baseURL}/api/consumptions/all`)
+        all: async () => await authAxios.get(`${baseURL}/api/consumptions/all`),
+        getById: async (id) => await authAxios.get(`${baseURL}/api/consumptions/${id}`),
+
     }
 }
 export function createEmployeeService(authAxios) {
@@ -80,7 +82,8 @@ export function createEmployeeService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/employees/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/employees/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/employees/count`),
-        all: async () => await authAxios.get(`${baseURL}/api/employees/all`)
+        all: async () => await authAxios.get(`${baseURL}/api/employees/all`),
+        getById: async (id) => await authAxios.get(`${baseURL}/api/employees/${id}`),
 
     }
 }
@@ -114,7 +117,8 @@ export function createMissionOrderService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/missionOrders/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/missionOrders/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/missionOrders/count`),
-        all: async () => await authAxios.get(`${baseURL}/api/missionOrders/all`)
+        all: async () => await authAxios.get(`${baseURL}/api/missionOrders/all`),
+        getById: async (id) => await authAxios.get(`${baseURL}/api/missionOrders/${id}`),
 
     }
 }
@@ -185,7 +189,8 @@ export function createVehicleService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/vehicles/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/vehicles/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/vehicles/count`),
-        all: async () => await authAxios.get(`${baseURL}/api/vehicles/all`)
+        all: async () => await authAxios.get(`${baseURL}/api/vehicles/all`),
+        getById: async (id) => await authAxios.get(`${baseURL}/api/vehicles/${id}`),
 
     }
 }
