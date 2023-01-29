@@ -1,18 +1,15 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-function useAuthRequest(baseURL) {
+function useAuthRequest(baseURL = 'http://localhost:8080/') {
 
     const token = localStorage.getItem('token');
 
-    const authAxios = axios.create({
+    return axios.create({
         baseURL,
         headers: {
             Authorization: token ? `Bearer ${token}` : ''
         }
     });
-
-    return authAxios;
 }
 
 export default useAuthRequest;

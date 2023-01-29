@@ -1,4 +1,4 @@
-import {Box, IconButton, Typography, useTheme} from "@mui/material";
+import {Box, Button, IconButton, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
@@ -14,6 +14,7 @@ import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import {useNavigate} from "react-router-dom";
 import {getData} from "./data";
+import ConfirmDelete from "../../components/ConfirmDeleteDialog";
 
 const Employees = () => {
   const theme = useTheme();
@@ -21,6 +22,29 @@ const Employees = () => {
   const authAxios = useAuthRequest('http://localhost:8080/');
   const employeeService = createEmployeeService(authAxios);
     const navigate =  useNavigate();
+    const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [deleted, setDeleted] = useState(false)
+    const handleDelete = () => {
+        setOpenConfirmDeleteDialog(true);
+        setDeleted(!deleted)
+    };
+
+    const handleEdit = (row) => {
+        const userId = row.id;
+        navigate("/employee/"+userId+"/edit")
+    };
+
+    const handleCloseConfirmDeleteDialog = () => {
+        setOpenConfirmDeleteDialog(false);
+        setSelectedUserId(null);
+    };
+
+    const handleConfirmDelete = () => {
+        // send the delete request to the server
+        console.log(`Deleting user with id: ${selectedUserId}`);
+        handleCloseConfirmDeleteDialog();
+    };
 
     const [employees, setEmployees] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -28,11 +52,14 @@ const Employees = () => {
     const handleRowClick = (params) => {
         // navigate to /employee/{id}
         const id = params.row.id;
-        navigate("/employee/"+id);
+        console.log("User Selected", id)
+        setSelectedUserId(id)
+
     }
 
     useEffect(() => {
         const fetchData = async () =>{
+            console.log("Getting employees...")
             setIsLoading(true);
             const data = await getData(employeeService);
             setEmployees(data);
@@ -40,19 +67,19 @@ const Employees = () => {
 
         }
         fetchData();
-    }, []);
+    }, [deleted]);
 
-    const handleDelete = (row)=>{
-        console.log("deleting..")
-        console.log(row)
-    }
-    const handleEdit = (row)=>{
-        console.log("editing..")
-        console.log(row)
-    }
 
     const columns = [
-    { field: "id", headerName: "ID" },
+    {
+        field: "id",
+        headerName: "ID",
+        renderCell:({ row: { id } })=>{
+            return <Box onClick={()=>{navigate("/employee/"+id+"")}}>
+                {id}
+            </Box>
+        }
+    },
 
     {
       field: "name",
@@ -103,9 +130,13 @@ const Employees = () => {
         flex: 0,
         renderCell: (params) => (
             <Box display="flex" justifyContent="space-between">
-                <IconButton onClick={() => handleDelete(params.row)}>
-                    <RemoveOutlinedIcon />
-                </IconButton>
+                <ConfirmDelete
+                    open={openConfirmDeleteDialog}
+                    onClose={handleCloseConfirmDeleteDialog}
+                    onConfirm={handleConfirmDelete}
+                    userId={selectedUserId}
+                    onDelete={handleDelete}
+                />
                 <IconButton onClick={() => handleEdit(params.row)}>
                     <ModeEditOutlineOutlinedIcon />
                 </IconButton>
@@ -122,7 +153,7 @@ const Employees = () => {
       <Header title="Employees" subtitle="List of All Employees" />
           <Box
             m="40px 0 0 0"
-            height="75vh"
+            height="66vh"
             sx={{
               "& .MuiDataGrid-root": {
                 border: "none",
@@ -149,12 +180,24 @@ const Employees = () => {
               },
             }}
           >
+              <Box
+                  m="40px 0 0 0"
+                  height="7vh"
+              >
+                  <Button variant="contained" color="secondary" onClick ={()=>{ navigate('/employee/add')}}>
+                      Add
+                  </Button>
+                  <Button variant="contained" color="primary">
+                      Delete Selected
+                  </Button>
+              </Box>
           {isLoading ? <p>Loading...</p> :<>
             <DataGrid
                 checkboxSelection
                 rows={employees}
                 columns={columns}
                 onRowClick={handleRowClick}
+
 
             />
           </>

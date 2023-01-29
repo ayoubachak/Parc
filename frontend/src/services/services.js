@@ -84,6 +84,9 @@ export function createEmployeeService(authAxios) {
         count: async () => await authAxios.get(`${baseURL}/api/employees/count`),
         all: async () => await authAxios.get(`${baseURL}/api/employees/all`),
         getById: async (id) => await authAxios.get(`${baseURL}/api/employees/${id}`),
+        addOne: async (employee) => await authAxios.post(`${baseURL}/api/employees/add`, employee),
+        edit: async (id, employee) => await authAxios.put(`${baseURL}/api/employees/update/${id}`, employee),
+        remove: async (id) => await authAxios.delete(`${baseURL}/employees/${id}`),
 
     }
 }
@@ -176,7 +179,8 @@ export function createServiceService(authAxios) {
         update: async (id, service) => await authAxios.put(`${baseURL}/services/${id}`, service),
         delete: async (id) => await authAxios.delete(`${baseURL}/services/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/services/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/services/count`)
+        count: async () => await authAxios.get(`${baseURL}/api/services/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/services/all`),
 
     }
 }

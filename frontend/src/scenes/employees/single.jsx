@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {createEmployeeService, createMissionOrderService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
@@ -13,6 +13,8 @@ import getData from "../order_missions/data";
 import {getDataForId} from "./data";
 import Missions from "../order_missions";
 import {DataGrid} from "@mui/x-data-grid";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const mapEmployeeFunctionToBox = (func, colors) =>{
 
@@ -52,7 +54,9 @@ const Employee = ()=>{
     const missionOrderService = createMissionOrderService(authAxios);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
+    const [deleted, setDeleted] = useState(false);
+    const navigate = useNavigate()
+    const [deletedNotification, setDeletedNotification ]= useState("")
     useEffect(() => {
         const fetchData = async () =>{
             setIsLoading(true);
@@ -72,6 +76,28 @@ const Employee = ()=>{
         }
         fetchData();
     }, []);
+
+    useEffect(()=>{
+        const deleteEmployee =async ()=>{
+            if(deleted){
+                const response = await employeeService.delete(employee.id);
+                if(response.status === 204){
+                    console.log("Deleted")
+
+                    setDeletedNotification(
+                    <Alert severity="info">
+                        <AlertTitle>Info</AlertTitle>
+                        Employee {employee.name} ({employee.id}) — <strong>Was Deleted</strong>
+                    </Alert>
+                    )
+                    setTimeout(()=>{
+                        navigate("/employees")
+                    },1000)
+                }
+            }
+        }
+        deleteEmployee()
+    },[deleted])
 
     const columns = [
         { field: "id", headerName: "ID" },
@@ -114,7 +140,7 @@ const Employee = ()=>{
 
     return <div> { isLoading ? <p>Loading...</p> :
         <>
-
+        {deletedNotification}
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Card>
@@ -124,17 +150,17 @@ const Employee = ()=>{
                                     <Avatar src={employee.avatar ? employee.avatar : '../../assets/user.png'} style={{ width: '100px', height: '100px' }} />
                                 </Grid>
                                 <Grid item xs={9}>
-                                    <Typography variant="h2" style={{fontWeight:600}}>{employee.name}</Typography>
+                                    <Typography variant="h2" style={{fontWeight:600}}>{employee.name} ({employee.id})</Typography>
                                     <Typography variant="div" style={{display:"flex", justifyContent:"flex-start"}}>{mapEmployeeFunctionToBox(employee.function, colors)}</Typography>
-                                    <Typography variant="h5">Service ID : {employee.service.id}</Typography>
+                                    <Typography variant="h5">{employee.service.name}</Typography>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>
-                                    <Button variant="contained" color="primary">
+                                    <Button variant="contained" color="primary" onClick={()=>{navigate("/employee/"+employee.id+"/edit")}}>
                                         Edit
                                     </Button>
-                                    <Button variant="contained" color="secondary">
+                                    <Button variant="contained" color="secondary" onClick={()=>{setDeleted(true);console.log(deleted)}}>
                                         Delete
                                     </Button>
                                 </Grid>
@@ -151,7 +177,7 @@ const Employee = ()=>{
                             <Grid container spacing={12}>
                                 <Grid item>
                                     <Typography variant="h1" style={{fontWeight:900, margin:"10px 0 0 10"}}>Missions</Typography>
-                                    <Typography variant="subtitle1" style={{ margin:"10px 0 0 10"}}>All Missions as a primary Employee</Typography>
+                                    <Typography variant="subtitle1" style={{ margin:"10px 0 0 10"}}>All Missions as a primary Employee for <b>{employee.name} ({employee.id})</b></Typography>
                                 </Grid>
 
                             </Grid>
@@ -192,10 +218,6 @@ const Employee = ()=>{
                                     }
                                 </Grid>
                             </Grid>
-
-                            {/*this was not worth the pain*/}
-                            {/*<Missions data={missions}/>*/}
-
                         </CardContent>
                     </Card>
                 </Grid>

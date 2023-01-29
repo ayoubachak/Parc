@@ -6,7 +6,7 @@ export async function  getData(employeeService){
     const response = await employeeService.all()
     const employeesMapped = [...response.data];
     employeesMapped.map((employee) =>{
-        employee.service = employee.service?.id;
+        employee.service = employee.service?.name;
         employee.func = employee.function;
         return employee
 

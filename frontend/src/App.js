@@ -22,6 +22,8 @@ import Missions from "./scenes/order_missions";
 import Employees from "./scenes/employees";
 import Consumptions from "./scenes/consumptions";
 import Employee from "./scenes/employees/single";
+import EmployeeAdd from "./scenes/employees/add";
+import EmployeeEdit from "./scenes/employees/edit";
 
 function App() {
     const {isAuthenticated} = useAuth()
@@ -45,6 +47,8 @@ function App() {
                     <Route path="/vehicles" element={<Vehicles />} />
                     <Route path="/employees" element={<Employees />} />
                     <Route path='/employee/:id' element={<Employee/>} />
+                    <Route path='/employee/:id/edit' element={<EmployeeEdit/>} />
+                    <Route path='/employee/add' element={<EmployeeAdd/>} />
                     <Route path="/missions" element={<Missions />} />
                     <Route path="/consumptions" element={<Consumptions />} />
 
