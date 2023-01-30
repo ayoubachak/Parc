@@ -26,9 +26,7 @@ public class Vehicle {
     private FuelType fuelType;
     @ManyToOne(cascade = { CascadeType.ALL })
     private Category category;
-    @OneToMany(cascade = { CascadeType.ALL })
-    @JoinColumn(name = "missionorder_id")
-    private List<MissionOrder> missionOrder;
+
     @ManyToOne(cascade = { CascadeType.ALL })
     private Service service;
 
@@ -168,14 +166,6 @@ public class Vehicle {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public List<MissionOrder> getMissionOrder() {
-        return missionOrder;
-    }
-
-    public void setMissionOrder(List<MissionOrder> missionOrder) {
-        this.missionOrder = missionOrder;
     }
 
     public Service getService() {

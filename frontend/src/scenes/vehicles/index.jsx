@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Button, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {createMissionOrderService, createVehicleService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import getData from "./data";
+import {useNavigate} from "react-router-dom";
 
 const Vehicles = () => {
     const theme = useTheme();
@@ -15,7 +16,7 @@ const Vehicles = () => {
     const vehicleService = createVehicleService(authAxios);
     const [vehicles, setVehicles] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -29,7 +30,15 @@ const Vehicles = () => {
 
 
     const columns = [
-        { field: "id", headerName: "ID" },
+        {
+            field: "id",
+            headerName: "ID",
+            renderCell:({ row: { id } })=>{
+                return <Box onClick={()=>{navigate("/vehicle/"+id+"")}}>
+                    {id}
+                </Box>
+            }
+        },
         {
             field: "brandmodel",
             headerName: "Brand Model",
@@ -56,11 +65,11 @@ const Vehicles = () => {
             field: "color",
             headerName: "Color",
             flex: 1,
-            // renderCell: (params) => (
-            //     <Typography color={params.row.color}>
-            //         {params.row.color}
-            //     </Typography>
-            // ),
+        },
+        {
+            field: "service",
+            headerName: "Service",
+            flex: 1,
         },
         {
             field: "model",
@@ -112,7 +121,7 @@ const Vehicles = () => {
             <Header title="Vehicles" subtitle="List of All Vehicles" />
             <Box
                 m="40px 0 0 0"
-                height="75vh"
+                height="66vh"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -139,6 +148,17 @@ const Vehicles = () => {
                     },
                 }}
             >
+                <Box
+                    m="40px 0 0 0"
+                    height="7vh"
+                >
+                    <Button variant="contained" color="secondary" onClick ={()=>{ navigate('/vehicle/add')}}>
+                        Add
+                    </Button>
+                    <Button variant="contained" color="primary">
+                        Delete Selected
+                    </Button>
+                </Box>
                 {isLoading ? <p>Loading...</p> :<>
                     <DataGrid checkboxSelection rows={vehicles} columns={columns} />
                 </>

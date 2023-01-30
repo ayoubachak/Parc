@@ -35,6 +35,7 @@ export function createBrandService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/brands/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/brands/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/brands/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/brands/all`),
 
     }
 }
@@ -45,7 +46,8 @@ export function createCategoryService(authAxios) {
         update: async (id, category) => await authAxios.put(`${baseURL}/categories/${id}`, category),
         delete: async (id) => await authAxios.delete(`${baseURL}/categories/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/categories/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/categories/count`)
+        count: async () => await authAxios.get(`${baseURL}/api/categories/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/categories/all`),
 
     }
 }
@@ -58,6 +60,7 @@ export function createBrandModelService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/brandModels/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/brandModels/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/brandModels/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/brandModels/all`),
 
     }
 }
@@ -108,7 +111,8 @@ export function createFuelTypeService(authAxios) {
         update: async (id, fuelType) => await authAxios.put(`${baseURL}/fuelTypes/${id}`, fuelType),
         delete: async (id) => await authAxios.delete(`${baseURL}/fuelTypes/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/fuelTypes/${id}`),
-        count: async () => await authAxios.get(`${baseURL}/api/fuelTypes/count`)
+        count: async () => await authAxios.get(`${baseURL}/api/fuelTypes/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/fuelTypes/all`),
 
     }
 }
@@ -195,6 +199,7 @@ export function createVehicleService(authAxios) {
         count: async () => await authAxios.get(`${baseURL}/api/vehicles/count`),
         all: async () => await authAxios.get(`${baseURL}/api/vehicles/all`),
         getById: async (id) => await authAxios.get(`${baseURL}/api/vehicles/${id}`),
+        addOne: async (vehicle) => await authAxios.post(`${baseURL}/api/vehicles/add`, vehicle),
 
     }
 }

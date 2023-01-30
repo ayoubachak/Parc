@@ -17,4 +17,9 @@ public class BrandController extends BaseController<Brand, BrandRepository> {
         this.repository = repository;
     }
 
+    @GetMapping("/all")
+    public List<Brand> all(){
+        return (List<Brand>) repository.findAll();
+    }
+
 }
