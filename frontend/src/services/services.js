@@ -200,6 +200,8 @@ export function createVehicleService(authAxios) {
         all: async () => await authAxios.get(`${baseURL}/api/vehicles/all`),
         getById: async (id) => await authAxios.get(`${baseURL}/api/vehicles/${id}`),
         addOne: async (vehicle) => await authAxios.post(`${baseURL}/api/vehicles/add`, vehicle),
+        edit: async (id, vehicle) => await authAxios.put(`${baseURL}/api/vehicles/update/${id}`, vehicle),
+        remove: async (id) => await authAxios.delete(`${baseURL}/vehicles/${id}`),
 
     }
 }

@@ -1,0 +1,11 @@
+TODOS:
+-   Fix the sql problem when trying to delete objects with constraints:
+    * Either add a notification for the error to be explained to the user.
+    * Or Actually drop the object from the database and please the user
+-   Send Employees and vehicles to missions with a button that will add a mission.
+-   Add Counts of stuff in the admin front page.
+-   Add the Live Search and the Search in the main page ( ElasticSearch or normal Search )
+-   Add repairs with repair details and pieces to the vehicle objects in a certain form.
+-   Add the consumptions to the vehicles in a certain form.
+-   Do something cool with the map!
+-   Holy Moly all of this needs to be done in a small span of time 😫

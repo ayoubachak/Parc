@@ -1,5 +1,6 @@
 package parc.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import parc.model.concrete.*;
 import parc.repository.*;
@@ -47,17 +48,6 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
         entity.setService(service);
 
         // Brand checking
-//        BrandModel brandModel = entity.getBrandModel();
-//        if(brandModel != null && brandModel.getId()!=null){
-//            brandModel = brandModelRepository.findById(brandModel.getId()).orElse(null);
-//        }
-//        if(brandModel == null){
-//            brandModel = new BrandModel();
-//            brandModel.setBrand(entity.getBrandModel().getBrand());
-//            brandModelRepository.save(brandModel);
-//        }
-
-        // Brand checking
         BrandModel brandModel = entity.getBrandModel();
         Brand brand = brandModel.getBrand();
         if(brandModel != null && brandModel.getId() != null){
@@ -98,5 +88,72 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
 
 
         return repository.save(entity);
+    }
+
+    @PutMapping("/update/{id}")
+    public Vehicle update(@PathVariable Long id, @RequestBody Vehicle entity){
+        Vehicle vehicle = repository.findById(id).orElse(null);
+        if(vehicle == null ){
+            throw  new EntityNotFoundException("No Vehicle found with id :"+id);
+        }
+        // setting the sent variables
+        vehicle.setColor(entity.getColor());
+        vehicle.setLiscence(entity.getLiscence());
+        vehicle.setModel(entity.getModel());
+        vehicle.setNumchairs(entity.getNumchairs());
+        vehicle.setPower(entity.getPower());
+        vehicle.setVehkm(entity.getVehkm());
+
+        Service service = entity.getService();
+        // check if the service exists
+        if (service != null && service.getId() != null) {
+            service = serviceRepository.findById(service.getId()).orElse(null);
+        }
+        if (service == null) {
+            // create a new service
+            service = new Service();
+            serviceRepository.save(service);
+        }
+        vehicle.setService(service);
+
+        // Brand checking
+        BrandModel brandModel = entity.getBrandModel();
+        Brand brand = brandModel.getBrand();
+        if(brandModel != null && brandModel.getId() != null){
+            brandModel = brandModelRepository.findById(brandModel.getId()).orElse(null);
+        }
+        if(brandModel == null){
+            brandModel = new BrandModel();
+            brandModel.setBrand(brand);
+            brandModelRepository.save(brandModel);
+        }
+        vehicle.setBrandModel(brandModel);
+
+        // Fuel Type checking
+        FuelType fuelType = entity.getFuelType();
+        // check if the fuelType exists
+        if (fuelType != null && fuelType.getId() != null) {
+            fuelType = fuelTypeRepository.findById(fuelType.getId()).orElse(null);
+        }
+        if (fuelType == null) {
+            // create a new fuelType
+            fuelType = new FuelType();
+            fuelTypeRepository.save(fuelType);
+        }
+        vehicle.setFuelType(fuelType);
+
+        // Category Checking
+        Category category = entity.getCategory();
+        // check if the category exists
+        if (category != null && category.getId() != null) {
+            category = categoryRepository.findById(category.getId()).orElse(null);
+        }
+        if (category == null) {
+            // create a new category
+            category = new Category();
+            categoryRepository.save(category);
+        }
+        vehicle.setCategory(category);
+        return repository.save(vehicle);
     }
 }
