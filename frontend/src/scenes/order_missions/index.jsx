@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Button, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {createMissionOrderService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import getData from "./data";
+import {useNavigate} from "react-router-dom";
 
 const Missions = (props) => {
     const theme = useTheme();
@@ -16,6 +17,7 @@ const Missions = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const authAxios = useAuthRequest('http://localhost:8080/');
     const missionOrderService = createMissionOrderService(authAxios);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -33,7 +35,15 @@ const Missions = (props) => {
 
 
     const columns = [
-        { field: "id", headerName: "ID" },
+        {
+            field: "id",
+            headerName: "ID",
+            renderCell:({ row: { id } })=>{
+                return <Box onClick={()=>{navigate("/mission/"+id+"")}}>
+                    {id}
+                </Box>
+            }
+        },
         {
             field: "startDate",
             headerName: "Start Date",
@@ -77,7 +87,7 @@ const Missions = (props) => {
             <Header title="Missions" subtitle="List of All Missions" />
             <Box
                 m="40px 0 0 0"
-                height="75vh"
+                height="66vh"
                 sx={{
                     "& .MuiDataGrid-root": {
                         border: "none",
@@ -104,6 +114,17 @@ const Missions = (props) => {
                     },
                 }}
             >
+                <Box
+                    m="40px 0 0 0"
+                    height="7vh"
+                >
+                    <Button variant="contained" color="secondary" onClick ={()=>{ navigate('/mission/add')}}>
+                        Add
+                    </Button>
+                    <Button variant="contained" color="primary">
+                        Delete Selected
+                    </Button>
+                </Box>
                 {isLoading ? <p>Loading...</p> :<>
                     <DataGrid checkboxSelection rows={missions} columns={columns} />
                 </>

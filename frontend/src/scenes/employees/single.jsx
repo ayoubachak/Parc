@@ -16,6 +16,10 @@ import {DataGrid} from "@mui/x-data-grid";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
+const uc = (s)=>{
+    return s.toUpperCase()
+}
+
 const mapEmployeeFunctionToBox = (func, colors) =>{
 
     return <Box
@@ -152,7 +156,7 @@ const Employee = ()=>{
                                 <Grid item xs={9}>
                                     <Typography variant="h2" style={{fontWeight:600}}>{employee.name} ({employee.id})</Typography>
                                     <Typography variant="div" style={{display:"flex", justifyContent:"flex-start"}}>{mapEmployeeFunctionToBox(employee.function, colors)}</Typography>
-                                    <Typography variant="h5">{employee.service.name}</Typography>
+                                    <Typography variant="h5">{uc(employee.service.name)}</Typography>
                                 </Grid>
                             </Grid>
                             <Grid container spacing={3}>

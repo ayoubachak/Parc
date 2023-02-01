@@ -28,32 +28,6 @@ import {DataGrid} from "@mui/x-data-grid";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
-const mapVehicleFunctionToBox = (func, colors) =>{
-
-    return <Box
-        width="10%"
-        m="10px 10px 10px 0px"
-        p="5px"
-        display="flex"
-        justifyContent="center"
-        backgroundColor={
-            func === "Manager"
-                ? colors.greenAccent[600]
-                : func === "Driver"
-                    ? colors.greenAccent[700]
-                    : colors.greenAccent[700]
-        }
-        borderRadius="4px"
-    >
-        {func === "Manager" && <AdminPanelSettingsOutlinedIcon />}
-        {func === "Driver" && <DirectionsCarOutlinedIcon />}
-        {func === "Admin" && <LockOpenOutlinedIcon />}
-        <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-            {func}
-        </Typography>
-    </Box>
-}
-
 const Vehicle = ()=>{
     let { id } = useParams();
     const [vehicle, setVehicle] = useState({});

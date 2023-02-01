@@ -27,6 +27,9 @@ import EmployeeEdit from "./scenes/employees/edit";
 import Vehicle from "./scenes/vehicles/single";
 import VehicleAdd from "./scenes/vehicles/add";
 import VehicleEdit from "./scenes/vehicles/edit";
+import Mission from "./scenes/order_missions/single";
+import MissionAdd from "./scenes/order_missions/add";
+import MissionEdit from "./scenes/order_missions/edit";
 
 function App() {
     const {isAuthenticated} = useAuth()
@@ -59,6 +62,10 @@ function App() {
                     <Route path='/employee/add' element={<EmployeeAdd/>} />
 
                     <Route path="/missions" element={<Missions />} />
+                    <Route path="/mission/:id" element={<Mission />} />
+                    <Route path="/mission/:id/edit" element={<MissionEdit />} />
+                    <Route path="/mission/add" element={<MissionAdd />} />
+
                     <Route path="/consumptions" element={<Consumptions />} />
 
                 </Route>
