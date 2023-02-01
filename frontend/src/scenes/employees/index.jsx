@@ -88,6 +88,12 @@ const Employees = () => {
       cellClassName: "name-column--cell",
     },
     {
+        field: "email",
+        headerName: "Email",
+        flex: 1,
+        cellClassName: "name-column--cell",
+    },
+    {
         field: "service",
         headerName: "Service",
         flex: 1,

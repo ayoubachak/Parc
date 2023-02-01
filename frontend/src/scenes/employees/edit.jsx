@@ -27,6 +27,7 @@ const EmployeeEdit = ()=>{
     const servicesService = createServiceService(authAxios);
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [func, setFunction] = useState("");
     const [service, setService] = useState("");
     const [services, setServices] = useState([]);
@@ -75,6 +76,7 @@ const EmployeeEdit = ()=>{
             const response = await employeeService.getById(id)
             setEmployee(response.data)
             setName(response.data.name)
+            setEmail(response.data.email)
             setFunction(response.data["function"])
             setService(response.data.service)
             console.log(employee)
@@ -88,7 +90,7 @@ const EmployeeEdit = ()=>{
 
     useEffect(() => {
         const saveEmployee = async ()=>{
-            if (employee.name && employee.function && employee.service && saved) {
+            if (employee.name && employee.email && employee.function && employee.service && saved) {
                 console.log("Saving the employee")
                 console.log(employee)
 
@@ -115,6 +117,7 @@ const EmployeeEdit = ()=>{
         event.preventDefault();
         setEmployee({
             name: name,
+            email:email,
             function: func,
             service: service,
         });
@@ -142,6 +145,15 @@ const EmployeeEdit = ()=>{
                                                     label="Name"
                                                     value={name}
                                                     onChange={(event) => setName(event.target.value)}
+                                                    variant="outlined"
+                                                    required
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    label="Email"
+                                                    value={email}
+                                                    onChange={(event) => setEmail(event.target.value)}
                                                     variant="outlined"
                                                     required
                                                 />

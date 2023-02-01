@@ -30,6 +30,10 @@ const EmployeeBox = ({ employee }) => {
             fontWeight: 'bold',
             marginRight: theme.spacing(2),
         },
+        email: {
+            fontWeight: 200,
+            marginRight: theme.spacing(2),
+        },
         function: {
             fontSize: 12,
             color: '#555',
@@ -50,6 +54,9 @@ const EmployeeBox = ({ employee }) => {
             <Grid item xs={3}>
                 <Typography style={classes.name}>
                     {employee.name} ({employee.id})
+                </Typography>
+                <Typography style={classes.email}>
+                    {employee.email}
                 </Typography>
                 <Typography style={classes.function}>{employee.function}</Typography>
             </Grid>

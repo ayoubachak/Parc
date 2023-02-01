@@ -89,6 +89,14 @@ const Mission = ()=>{
         fetchData();
     },[])
 
+    const borderStyle= {
+        border: '1px solid #9A9797FF',
+        borderRadius: 5,
+        padding: theme.spacing(2),
+        margin: theme.spacing(2),
+        height:"100%"
+    }
+
     return <div> { isLoading ? <p>Loading...</p> :
         <>
             {deletedNotification}
@@ -99,23 +107,23 @@ const Mission = ()=>{
                             <Box mb={10}>
                                 <Grid container spacing={3} >
                                     <Grid item xs={6} >
-                                    <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center">
-                                        <Grid item xs={12}>
-                                            <Typography variant="h2" style={{fontWeight:900, margin:"10px 0 0 10"}}>{mission.missionSubject}</Typography>
-                                            <Typography variant="h4" style={{ margin:"10px 0 0 10"}}>{mission.type}</Typography>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Button variant="contained" color="primary" onClick={()=>{navigate("/mission/"+mission.id+"/edit")}}>
-                                                Edit
-                                            </Button>
-                                            <Button variant="contained" color="secondary" onClick={()=>{setDeleted(true);console.log(deleted)}}>
-                                                Delete
-                                            </Button>
+                                        <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center"  style={borderStyle}>
+                                            <Grid item xs={12}>
+                                                <Typography variant="h2" style={{fontWeight:900, margin:"10px 0 0 10"}}>{mission.missionSubject}</Typography>
+                                                <Typography variant="h4" style={{ margin:"10px 0 0 10"}}>{mission.type}</Typography>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" color="primary" onClick={()=>{navigate("/mission/"+mission.id+"/edit")}}>
+                                                    Edit
+                                                </Button>
+                                                <Button variant="contained" color="secondary" onClick={()=>{setDeleted(true);console.log(deleted)}}>
+                                                    Delete
+                                                </Button>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
-                                </Grid>
                                     <Grid item xs={6}>
-                                        <TableContainer component={Paper}>
+                                        <TableContainer component={Paper}  style={borderStyle}>
                                             <Table>
                                                 <TableHead>
                                                     <TableRow>
@@ -151,7 +159,7 @@ const Mission = ()=>{
                             </Box>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>
-                                    <div style={{height: '300px', overflowY: 'scroll'}}>
+                                    <div style={{height: '250px', overflowY: 'scroll'}}>
                                         <h3>Primary Employee</h3>
                                         <EmployeeBox employee={mission.employee} />
                                         <h3>Replacement Employee</h3>
@@ -167,7 +175,7 @@ const Mission = ()=>{
                                 <Grid item xs={6}>
                                     {isMissionVehiclesLoading? <p>Loading...</p>:<>
 
-                                    { missionVehicles.length > 0? <div style={{height: '300px', overflowY: 'scroll'}}>
+                                    { missionVehicles.length > 0? <div style={{height: '250px', overflowY: 'scroll'}}>
                                             <h3>Vehicles</h3>
                                             {missionVehicles.map((vehicle)=>{
                                                 return <VehicleBox vehicle={vehicle} />

@@ -155,6 +155,7 @@ const Employee = ()=>{
                                 </Grid>
                                 <Grid item xs={9}>
                                     <Typography variant="h2" style={{fontWeight:600}}>{employee.name} ({employee.id})</Typography>
+                                    <Typography variant="h4" style={{fontWeight:300}}>{employee.email}</Typography>
                                     <Typography variant="div" style={{display:"flex", justifyContent:"flex-start"}}>{mapEmployeeFunctionToBox(employee.function, colors)}</Typography>
                                     <Typography variant="h5">{uc(employee.service.name)}</Typography>
                                 </Grid>

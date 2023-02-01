@@ -25,6 +25,7 @@ const EmployeeAdd = ()=>{
     const servicesService = createServiceService(authAxios);
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [func, setFunction] = useState("");
     const [service, setService] = useState("");
     const [services, setServices] = useState([]);
@@ -67,7 +68,7 @@ const EmployeeAdd = ()=>{
 
     useEffect(() => {
         const addEmployee = async ()=>{
-            if (employee.name && employee.function && employee.service) {
+            if (employee.name && employee.email && employee.function && employee.service) {
                 console.log("Adding the employee")
                 const response = await employeeService.addOne(employee);
                 if(response.status === 200){
@@ -93,6 +94,7 @@ const EmployeeAdd = ()=>{
         event.preventDefault();
         setEmployee({
             name: name,
+            email: email,
             function: func,
             service: service,
         });
@@ -121,6 +123,15 @@ const EmployeeAdd = ()=>{
                                                 label="Name"
                                                 value={name}
                                                 onChange={(event) => setName(event.target.value)}
+                                                variant="outlined"
+                                                required
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                label="Email"
+                                                value={email}
+                                                onChange={(event) => setEmail(event.target.value)}
                                                 variant="outlined"
                                                 required
                                             />
