@@ -56,13 +56,6 @@ public class Vehicle {
         this.orderMissions = orderMissions;
     }
 
-//    public Set<VehicleState> getVehicleStates() {
-//        return vehicleStates;
-//    }
-//
-//    public void setVehicleStates(Set<VehicleState> vehicleStates) {
-//        this.vehicleStates = vehicleStates;
-//    }
 
     public Vehicle(Long id, String color, String license, String model, int numChairs, int power, int vehkm, BrandModel brandModel, Category category, FuelType fuelType, Reparation reparation, Service service, Set<VehicleState> vehicleState, Set<MissionOrder> orderMissions) {
         this.id = id;

@@ -17,8 +17,8 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
     private final BrandRepository brandRepository;
     private final FuelTypeRepository fuelTypeRepository;
     private final CategoryRepository categoryRepository;
-
-    public VehicleController(VehicleRepository repository, ServiceRepository serviceRepository, BrandModelRepository brandModelRepository, BrandRepository brandRepository, FuelTypeRepository fuelTypeRepository, CategoryRepository categoryRepository) {
+    private final MissionOrderRepository missionOrderRepository;
+    public VehicleController(VehicleRepository repository, ServiceRepository serviceRepository, BrandModelRepository brandModelRepository, BrandRepository brandRepository, FuelTypeRepository fuelTypeRepository, CategoryRepository categoryRepository, MissionOrderRepository missionOrderRepository) {
         super(repository);
         this.repository = repository;
         this.serviceRepository = serviceRepository;
@@ -26,6 +26,7 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
         this.brandRepository = brandRepository;
         this.fuelTypeRepository = fuelTypeRepository;
         this.categoryRepository = categoryRepository;
+        this.missionOrderRepository = missionOrderRepository;
     }
     @GetMapping("/all")
     public List<Vehicle> all(){
@@ -155,5 +156,12 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
         }
         vehicle.setCategory(category);
         return repository.save(vehicle);
+    }
+
+    @GetMapping("/mission/{id}")
+    public List<Vehicle> getVehiclesByMissionId(@PathVariable Long id){
+        MissionOrder orderMission =  missionOrderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("MissionOrder with ID not found"));
+
+        return repository.findByOrderMissions(orderMission);
     }
 }

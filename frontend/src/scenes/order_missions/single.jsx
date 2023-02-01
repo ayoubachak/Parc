@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import { createEmployeeService, createMissionOrderService } from "../../services/services";
+import {createEmployeeService, createMissionOrderService, createVehicleService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import {
     Avatar,
@@ -20,6 +20,7 @@ import {tokens} from "../../theme";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import EmployeeBox from "../../components/EmployeeBox";
+import VehicleBox from "../../components/VehicleBox";
 
 
 
@@ -27,15 +28,18 @@ const Mission = ()=>{
     let { id } = useParams();
     const [mission, setMission] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-
-
+    const [missionVehicles, setMissionVehicles ] = useState([]);
+    const [isMissionVehiclesLoading, setIsMissionVehiclesLoading] = useState(true);
     const authAxios = useAuthRequest();
     const missionService = createMissionOrderService(authAxios);
+    const vehicleService = createVehicleService(authAxios);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const [deleted, setDeleted] = useState(false);
     const navigate = useNavigate()
     const [deletedNotification, setDeletedNotification ]= useState("")
+
+
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -72,6 +76,19 @@ const Mission = ()=>{
         deleteMission()
     },[deleted])
 
+    // this should handle getting the vehicles
+    useEffect(()=>{
+        const fetchData = async () =>{
+            setIsMissionVehiclesLoading(true);
+            const response = await vehicleService.getVehiclesByMissionId(id)
+            if(response.data){
+                setMissionVehicles(response.data)
+                setIsMissionVehiclesLoading(false);
+            }
+        }
+        fetchData();
+    },[])
+
     return <div> { isLoading ? <p>Loading...</p> :
         <>
             {deletedNotification}
@@ -79,8 +96,9 @@ const Mission = ()=>{
                 <Grid item xs={12}>
                     <Card>
                         <CardContent>
-                            <Grid container spacing={3}>
-                                <Grid item xs={4} >
+                            <Box mb={10}>
+                                <Grid container spacing={3} >
+                                    <Grid item xs={6} >
                                     <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
                                             <Typography variant="h2" style={{fontWeight:900, margin:"10px 0 0 10"}}>{mission.missionSubject}</Typography>
@@ -96,53 +114,69 @@ const Mission = ()=>{
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Grid item xs={3}>
-                                    <TableContainer component={Paper}>
-                                        <Table>
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>Attribute</TableCell>
-                                                    <TableCell align="right">Value</TableCell>
-                                                </TableRow>
-                                            </TableHead>
+                                    <Grid item xs={6}>
+                                        <TableContainer component={Paper}>
+                                            <Table>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell>Attribute</TableCell>
+                                                        <TableCell align="right">Value</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
 
-                                            <TableBody>
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        Start Date
-                                                    </TableCell>
-                                                    <TableCell align="right">{mission.startDate}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        End Date
-                                                    </TableCell>
-                                                    <TableCell align="right">{mission.endDate}</TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        Path
-                                                    </TableCell>
-                                                    <TableCell align="right">{mission.path}</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell component="th" scope="row">
+                                                            Start Date
+                                                        </TableCell>
+                                                        <TableCell align="right">{mission.startDate}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell component="th" scope="row">
+                                                            End Date
+                                                        </TableCell>
+                                                        <TableCell align="right">{mission.endDate}</TableCell>
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell component="th" scope="row">
+                                                            Path
+                                                        </TableCell>
+                                                        <TableCell align="right">{mission.path}</TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={5}>
-                                    <div style={{height: '200px', overflowY: 'scroll'}}>
-                                    <h3>Primary Employee</h3>
-                                    <EmployeeBox employee={mission.employee} />
-                                    <h3>Replacement Employee</h3>
-                                    <EmployeeBox employee={mission.remplacementEmployee} />
-                                    { mission.employees.length > 0?<>
-                                        <h4>Other Employees</h4>
-                                        {mission.employees.map((employee)=>{
-                                            return <EmployeeBox employee={employee} />
-                                            })
-                                        }
-                                    </> :""}
+                            </Box>
+                            <Grid container spacing={3}>
+                                <Grid item xs={6}>
+                                    <div style={{height: '300px', overflowY: 'scroll'}}>
+                                        <h3>Primary Employee</h3>
+                                        <EmployeeBox employee={mission.employee} />
+                                        <h3>Replacement Employee</h3>
+                                        <EmployeeBox employee={mission.remplacementEmployee} />
+                                        { mission.employees.length > 0?<>
+                                            <h4>Other Employees</h4>
+                                            {mission.employees.map((employee)=>{
+                                                return <EmployeeBox employee={employee} />
+                                            })}
+                                        </> :""}
                                     </div>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    {isMissionVehiclesLoading? <p>Loading...</p>:<>
+
+                                    { missionVehicles.length > 0? <div style={{height: '300px', overflowY: 'scroll'}}>
+                                            <h3>Vehicles</h3>
+                                            {missionVehicles.map((vehicle)=>{
+                                                return <VehicleBox vehicle={vehicle} />
+                                            })}
+                                        </div>
+                                        : <p>No vehicles on this mission</p>
+                                    }
+                                    </>
+                                    }
                                 </Grid>
                             </Grid>
                         </CardContent>
