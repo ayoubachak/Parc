@@ -66,5 +66,9 @@ public class EmployeeController extends BaseController<Employee, EmployeeReposit
         return repository.save(employee);
     }
 
+    @GetMapping("/search")
+    public List<Employee> getEmployees(@RequestParam("query") String query) {
+        return repository.findByNameContainingOrEmailContaining(query, query);
+    }
 }
 

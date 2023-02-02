@@ -9,4 +9,6 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     long count();
 
     List<Employee> findByEmailIsNull();
+    List<Employee> findByNameContainingOrEmailContaining(String name, String email);
+
 }

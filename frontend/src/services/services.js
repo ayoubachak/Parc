@@ -90,7 +90,7 @@ export function createEmployeeService(authAxios) {
         addOne: async (employee) => await authAxios.post(`${baseURL}/api/employees/add`, employee),
         edit: async (id, employee) => await authAxios.put(`${baseURL}/api/employees/update/${id}`, employee),
         remove: async (id) => await authAxios.delete(`${baseURL}/employees/${id}`),
-
+        search: async (query) => await authAxios.get(`${baseURL}/api/employees/search?query=${query}`),
     }
 }
 export function createFuelCompanyService(authAxios) {

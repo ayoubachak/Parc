@@ -13,7 +13,7 @@ import {
     TableCell,
     TableContainer, TableHead, TableRow, Table, TableBody,
     Typography,
-    useTheme, Paper
+    useTheme, Paper, TextField, Stack
 } from "@mui/material";
 
 import {tokens} from "../../theme";
@@ -21,109 +21,86 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import EmployeeBox from "../../components/EmployeeBox";
 import VehicleBox from "../../components/VehicleBox";
+import {EmployeeTag} from "../../components/EmployeeLiveSearch";
 
 
 
 const MissionAdd = (props)=>{
-    let { id } = useParams();
     const [mission, setMission] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
-    const [missionVehicles, setMissionVehicles ] = useState([]);
-    const [isMissionVehiclesLoading, setIsMissionVehiclesLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false)
+
     const authAxios = useAuthRequest();
     const missionService = createMissionOrderService(authAxios);
     const vehicleService = createVehicleService(authAxios);
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [deleted, setDeleted] = useState(false);
     const navigate = useNavigate()
-    const [deletedNotification, setDeletedNotification ]= useState("")
+    const [successnotification, setSuccessNotification] = useState("");
+    const [errornotification, setErrorNotification] = useState("");
+
+    const [primaryEmployee, setPrimaryEmployee ] = useState(null);
+    const [replacementEmployee, setReplacementEmployee] = useState(null);
+    const [otherEmployees, setOtherEmployees] = useState([])
+
+    // Function to handle the error, set the error message
+    const handleSuccessNotification = (message) => {
+        setSuccessNotification(
+            <Alert severity="success">
+                <AlertTitle>Success</AlertTitle>
+                {message}
+            </Alert>
+        );
+    };
+    const handleErrorNotification = (message) => {
+        setErrorNotification(
+            <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {message}
+            </Alert>
+        );
+    };
 
 
-
-    useEffect(() => {
-        const fetchData = async () =>{
-            setIsLoading(true);
-            const response = await missionService.getById(id)
-            if(response.data?.id){
-                setMission(response.data)
-                setIsLoading(false);
-            }
-        }
-        fetchData();
-    }, []);
-
-
-    useEffect(()=>{
-        const deleteMission =async ()=>{
-            if(deleted){
-                const response = await missionService.delete(mission.id);
-                if(response.status === 204){
-                    console.log("Deleted")
-
-                    setDeletedNotification(
-                        <Alert severity="info">
-                            <AlertTitle>Info</AlertTitle>
-                            Mission {mission.missionSubject} ({mission.id}) — <strong>Was Deleted</strong>
-                        </Alert>
-                    )
-                    setTimeout(()=>{
-                        navigate("/missions")
-                    },1000)
-                }
-            }
-        }
-        deleteMission()
-    },[deleted])
-
-    // this should handle getting the vehicles
-    useEffect(()=>{
-        const fetchData = async () =>{
-            setIsMissionVehiclesLoading(true);
-            const response = await vehicleService.getVehiclesByMissionId(id)
-            if(response.data){
-                setMissionVehicles(response.data)
-                setIsMissionVehiclesLoading(false);
-            }
-        }
-        fetchData();
-    },[])
 
     const borderStyle= {
         border: '1px solid #9A9797FF',
         borderRadius: 5,
         padding: theme.spacing(2),
         margin: theme.spacing(2),
-        height:"100%"
+        height:"50%"
     }
 
     return <div> { isLoading ? <p>Loading...</p> :
         <>
-            {deletedNotification}
+            <Stack sx={{ width: '100%' }} spacing={2}>
+                {successnotification}
+                {errornotification}
+            </Stack>
+            <div style={{height: '100%', overflowY: 'scroll'}}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Card>
                         <CardContent>
-                            <Box mb={10}>
+                            <Box style={{height:"280px"}}>
                                 <Grid container spacing={3} >
                                     <Grid item xs={6} >
-                                        <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center"  style={borderStyle}>
+                                        <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center" style={borderStyle}>
                                             <Grid item xs={12}>
-                                                <Typography variant="h2" style={{fontWeight:900, margin:"10px 0 0 10"}}>{mission.missionSubject}</Typography>
-                                                <Typography variant="h4" style={{ margin:"10px 0 0 10"}}>{mission.type}</Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Button variant="contained" color="primary" onClick={()=>{ /* save the thing */}}>
-                                                    Save
-                                                </Button>
-                                                <Button variant="contained" color="secondary" onClick={()=>{navigate("/missions")}}>
-                                                    Back
-                                                </Button>
+                                                <TextField
+                                                    label="Mission Subject"
+                                                    variant="outlined"
+                                                    style={{ fontWeight: 900, margin: "10px 0 0 10" }}
+                                                />
+                                                <TextField
+                                                    label="Type"
+                                                    variant="outlined"
+                                                    style={{ margin: "10px 0 0 10" }}
+                                                />
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <TableContainer component={Paper}  style={borderStyle}>
+                                        <TableContainer component={Paper} style={borderStyle}>
                                             <Table>
                                                 <TableHead>
                                                     <TableRow>
@@ -137,19 +114,39 @@ const MissionAdd = (props)=>{
                                                         <TableCell component="th" scope="row">
                                                             Start Date
                                                         </TableCell>
-                                                        <TableCell align="right">{mission.startDate}</TableCell>
+                                                        <TableCell align="right">
+                                                            <TextField
+                                                                type="date"
+                                                                // defaultValue={mission.startDate}
+                                                                InputLabelProps={{
+                                                                    shrink: true,
+                                                                }}
+                                                            />
+                                                        </TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell component="th" scope="row">
                                                             End Date
                                                         </TableCell>
-                                                        <TableCell align="right">{mission.endDate}</TableCell>
+                                                        <TableCell align="right">
+                                                            <TextField
+                                                                type="date"
+                                                                // defaultValue={mission.endDate}
+                                                                InputLabelProps={{
+                                                                    shrink: true,
+                                                                }}
+                                                            />
+                                                        </TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell component="th" scope="row">
                                                             Path
                                                         </TableCell>
-                                                        <TableCell align="right">{mission.path}</TableCell>
+                                                        <TableCell align="right">
+                                                            <TextField
+                                                                // defaultValue={mission.path}
+                                                            />
+                                                        </TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
@@ -159,38 +156,36 @@ const MissionAdd = (props)=>{
                             </Box>
                             <Grid container spacing={3}>
                                 <Grid item xs={6}>
-                                    <div style={{height: '250px', overflowY: 'scroll'}}>
+                                    <div style={{ overflowY: 'scroll'}}>
                                         <h3>Primary Employee</h3>
-                                        <EmployeeBox employee={mission.employee} />
+                                        <EmployeeTag employee={primaryEmployee} setEmployee={setPrimaryEmployee}/>
                                         <h3>Replacement Employee</h3>
-                                        <EmployeeBox employee={mission.remplacementEmployee} />
-                                        { mission.employees.length > 0?<>
-                                            <h4>Other Employees</h4>
-                                            {mission.employees.map((employee)=>{
-                                                return <EmployeeBox employee={employee} />
-                                            })}
-                                        </> :""}
+                                        <EmployeeTag employee={replacementEmployee} setEmployee={setReplacementEmployee}/>
                                     </div>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    {isMissionVehiclesLoading? <p>Loading...</p>:<>
+                                    <div style={{ overflowY: 'scroll'}}>
+                                        <h3>Vehicles</h3>
 
-                                        { missionVehicles.length > 0? <div style={{height: '250px', overflowY: 'scroll'}}>
-                                                <h3>Vehicles</h3>
-                                                {missionVehicles.map((vehicle)=>{
-                                                    return <VehicleBox vehicle={vehicle} />
-                                                })}
-                                            </div>
-                                            : <p>No vehicles on this mission</p>
-                                        }
-                                    </>
-                                    }
+                                    </div>
                                 </Grid>
                             </Grid>
+                            <Grid container spacing={3} marginTop={"10px"}>
+                                <Grid item xs={12} display={"flex"} justifyContent={"flex-end"}  alighItems={"right"}>
+                                    <Button variant="contained" color="primary">
+                                        Save
+                                    </Button>
+                                    <Button variant="contained" color="secondary">
+                                        Back
+                                    </Button>
+                                </Grid>
+                            </Grid>
+
                         </CardContent>
                     </Card>
                 </Grid>
             </Grid>
+            </div>
         </>
     }
     </div>
