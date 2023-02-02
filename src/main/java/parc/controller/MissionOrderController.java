@@ -1,5 +1,6 @@
 package parc.controller;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,5 +23,15 @@ public class MissionOrderController extends BaseController<MissionOrder, Mission
     @GetMapping("/all")
     public List<MissionOrder> all(){
         return (List<MissionOrder>) repository.findAll();
+    }
+
+    @GetMapping("/count")
+    public long count() {
+        return repository.count();
+    }
+
+    @GetMapping("/subjects")
+    public long subjects() {
+        return repository.subjects();
     }
 }

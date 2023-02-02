@@ -3,26 +3,66 @@ import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import TrafficIcon from "@mui/icons-material/Traffic";
+
+import WorkIcon from '@mui/icons-material/Work';
+import PersonIcon from '@mui/icons-material/Person';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
-import {AuthContext} from "../../hooks/AuthProvider";
-import {useContext, useEffect, useState} from "react";
 import useAuthRequest from "../../hooks/useAuthRequest";
 
-import { createEmployeeService } from '../../services/services';
+import {AuthContext} from "../../hooks/AuthProvider";
+import {useContext, useEffect, useState} from "react";
+
+
+
+import {createEmployeeService, createVehicleService , createMissionOrderService} from '../../services/services';
+
+import getData from "./data";
+import {getVehicleCount} from "./data";
+import {getEmployeeCount} from "./data";
+import {getMissionCount} from "./data";
+import {getMissionSubjectCount} from "./data";
+
 const Dashboard = () => {
+
+    const authAxios = useAuthRequest('http://localhost:8080/');
+    const vehicleService = createVehicleService(authAxios);
+    const EmployeeService = createEmployeeService(authAxios);
+    const MissionService = createMissionOrderService(authAxios)
+
+    const [vehicleCount, setVehicleCount] = useState(0);
+    const [employeeCount, setEmployeeCount] = useState(0);
+    const [missionCount,setMissionCount] = useState(0);
+    const [missionSubjectCount,setMissionSubjectCount] = useState(0);
+    useEffect(() => {
+        const fetchData = async () =>{
+
+            const data = await getVehicleCount(vehicleService)
+            const data2= await getEmployeeCount(EmployeeService)
+            const data3= await getMissionCount(MissionService)
+            const data4= await  getMissionSubjectCount(MissionService)
+            setVehicleCount(data);
+            setEmployeeCount(data2);
+            setMissionCount(data3);
+            setMissionSubjectCount(data4)
+
+
+        }
+        fetchData();
+    }, []);
+
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { isAuthenticated, user} = useContext(AuthContext);
-  const authAxios = useAuthRequest();
-  const [employeeCount, setEmployeeCount] = useState(0);
+
+
 
 
   return (
@@ -82,12 +122,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title={missionCount}
+            subtitle="Missions"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <WorkIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -102,11 +142,11 @@ const Dashboard = () => {
         >
           <StatBox
             title={employeeCount}
-            subtitle="New Clients"
+            subtitle="Employees"
             progress="0.30"
             increase="+5%"
             icon={
-              <PersonAddIcon
+              <PersonIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -120,12 +160,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
+            title={vehicleCount}
+            subtitle="Vehicles"
             progress="0.80"
             increase="+43%"
             icon={
-              <TrafficIcon
+              <DirectionsCarIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -151,14 +191,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Mission Subjects
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                  {missionSubjectCount}
               </Typography>
             </Box>
             <Box>

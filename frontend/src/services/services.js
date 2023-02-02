@@ -126,6 +126,7 @@ export function createMissionOrderService(authAxios) {
         count: async () => await authAxios.get(`${baseURL}/api/missionOrders/count`),
         all: async () => await authAxios.get(`${baseURL}/api/missionOrders/all`),
         getById: async (id) => await authAxios.get(`${baseURL}/api/missionOrders/${id}`),
+        subjects: async () => await authAxios.get(`${baseURL}/api/missionOrders/subjects`)
 
     }
 }
