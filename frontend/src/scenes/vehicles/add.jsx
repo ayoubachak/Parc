@@ -249,6 +249,7 @@ const VehicleAdd = ()=>{
                                         {/*numChairs*/}
                                         {/*power*/}
                                         {/*vehkm*/}
+                                        {/*vehkm*/}
                                         <Grid item xs={12}>
                                             <TextField
                                                 label="Color"
@@ -430,6 +431,7 @@ const VehicleAdd = ()=>{
                                                         Back
                                                     </Button>
                                                 </Grid>
+
                                             </Grid>
                                         </Grid>
                                     </Grid>

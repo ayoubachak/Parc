@@ -126,7 +126,9 @@ export function createMissionOrderService(authAxios) {
         count: async () => await authAxios.get(`${baseURL}/api/missionOrders/count`),
         all: async () => await authAxios.get(`${baseURL}/api/missionOrders/all`),
         getById: async (id) => await authAxios.get(`${baseURL}/api/missionOrders/${id}`),
-        subjects: async () => await authAxios.get(`${baseURL}/api/missionOrders/subjects`)
+        subjects: async () => await authAxios.get(`${baseURL}/api/missionOrders/subjects`),
+        addOne: async (missionOrder) => await authAxios.post(`${baseURL}/api/missionOrders/add`, missionOrder),
+        edit: async (id, missionOrder) => await authAxios.put(`${baseURL}/api/missionOrders/update/${id}`, missionOrder),
 
     }
 }
@@ -203,6 +205,7 @@ export function createVehicleService(authAxios) {
         addOne: async (vehicle) => await authAxios.post(`${baseURL}/api/vehicles/add`, vehicle),
         edit: async (id, vehicle) => await authAxios.put(`${baseURL}/api/vehicles/update/${id}`, vehicle),
         remove: async (id) => await authAxios.delete(`${baseURL}/vehicles/${id}`),
+        search: async (query) => await authAxios.get(`${baseURL}/api/vehicles/search?query=${query}`),
         getVehiclesByMissionId : async (id) => await authAxios.get(`${baseURL}/api/vehicles/mission/${id}`)
     }
 }

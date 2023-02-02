@@ -23,7 +23,7 @@ const uc = (s)=>{
 const mapEmployeeFunctionToBox = (func, colors) =>{
 
     return <Box
-        width="10%"
+        width="50%"
         m="10px 10px 10px 0px"
         p="5px"
         display="flex"
@@ -153,11 +153,20 @@ const Employee = ()=>{
                                 <Grid item xs={3}>
                                     <Avatar src={employee.avatar ? employee.avatar : '../../assets/user.png'} style={{ width: '100px', height: '100px' }} />
                                 </Grid>
-                                <Grid item xs={9}>
+                                <Grid item xs={3}>
                                     <Typography variant="h2" style={{fontWeight:600}}>{employee.name} ({employee.id})</Typography>
                                     <Typography variant="h4" style={{fontWeight:300}}>{employee.email}</Typography>
                                     <Typography variant="div" style={{display:"flex", justifyContent:"flex-start"}}>{mapEmployeeFunctionToBox(employee.function, colors)}</Typography>
                                     <Typography variant="h5">{uc(employee.service.name)}</Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Button variant="contained" color="primary" onClick={()=>{navigate("/employee/"+employee.id+"/edit")}}>
+                                        Send Email
+                                    </Button>
+                                    <Button variant="contained" color="secondary" onClick={()=>{navigate("/mission/add" , { state: { employee } })}}>
+                                        Send On A mission
+                                    </Button>
+
                                 </Grid>
                             </Grid>
                             <Grid container spacing={3}>

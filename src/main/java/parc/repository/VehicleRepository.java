@@ -9,13 +9,14 @@ import parc.model.concrete.MissionOrder;
 import parc.model.concrete.Vehicle;
 
 import java.util.List;
+import java.util.Set;
 
 public interface VehicleRepository extends CrudRepository<Vehicle, Long> {
     long count();
-//    @Query("SELECT * from vehicle_order_mission where order_mission_id=:id")
-
-//    List<Vehicle> findVehiclesByMissionId(@Param("id") Long id);
-//    List<Vehicle> findByOrderMissions(MissionOrder orderMission);
+    Set<Vehicle> findByOrderMissions(MissionOrder orderMission);
+    List<Vehicle>
+    findByBrandModel_NameContainingIgnoreCaseOrBrandModel_Brand_NameContainingIgnoreCaseOrLiscenceContainingIgnoreCaseOrFuelType_NameContainingIgnoreCase(
+            String brandModelName, String brandName, String license, String fuelTypeName);
 }
 
 

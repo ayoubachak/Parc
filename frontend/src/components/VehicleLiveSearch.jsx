@@ -14,29 +14,29 @@ import SearchIcon from "@mui/icons-material/Search";
 import {tokens} from "../theme";
 import {useEffect, useState} from 'react';
 import MenuItem from "@mui/material/MenuItem";
-import {createEmployeeService} from "../services/services";
+import {createVehicleService} from "../services/services";
 import useAuthRequest from "../hooks/useAuthRequest";
 import CloseIcon from "@mui/icons-material/Close";
 import {useNavigate} from "react-router-dom";
 
 const uc = (s)=>{
-    return s.toUpperCase()
+    return (s?.name && s.name.toUpperCase()) || s.toUpperCase()
 }
 
-export function EmployeeTag( {employee, handleEmployeeSelection} ){
+export function VehicleTag( {vehicle, handleVehicleSelection} ){
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const authAxios = useAuthRequest();
-    const employeeService = createEmployeeService(authAxios)
+    const vehicleService = createVehicleService(authAxios)
 
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const [query, setQuery ] = useState("")
-
+console.log(vehicle)
     useEffect(()=>{
         const fetchData = async ()=>{
             if(query){
-                const response = await employeeService.search(query)
+                const response = await vehicleService.search(query)
                 // You can make an API call here to get the search results
                 if(response.status === 200){
                     setSearchResults(response.data);
@@ -56,7 +56,7 @@ export function EmployeeTag( {employee, handleEmployeeSelection} ){
     };
 
     return <div style={{position:'relative'}}>
-        { employee===null?
+        { vehicle===null?
             <>
                 {showResults && <Paper // if the search results Occur
                     style={{
@@ -66,17 +66,17 @@ export function EmployeeTag( {employee, handleEmployeeSelection} ){
                         right: 0,
                         zIndex: 1
                     }}>
-                    {searchResults.map((result,index) => (
-                        <MenuItem key={index} onClick={() => handleEmployeeSelection(result)}>
+                    {searchResults.map( (result, index) => (
+                        <MenuItem key={index} onClick={() => handleVehicleSelection(result)}>
                             <ListItemAvatar>
                                 <Avatar src={result?.avatar || "../assets/user.png"} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={`${result.name} (${result.id})`}
-                                secondary={`${result.service && uc(result.service.name)}`}
+                                primary={`${result.brandModel && result.brandModel.brand.name || "No Brand"} ${result.brandModel && result.brandModel.name || "No Brand Model" } (${result.liscence})`}
+                                secondary={`${result.service && uc(result.service)}`}
                             />
                             <ListItemSecondaryAction>
-                                <Typography variant="body2">{result.email}</Typography>
+                                <Typography variant="body2">{result.power} HP | {result.numchairs} Chairs | {result.fuelType.name}</Typography>
                             </ListItemSecondaryAction>
                         </MenuItem>
                     ))}
@@ -88,7 +88,7 @@ export function EmployeeTag( {employee, handleEmployeeSelection} ){
                 >
                     <InputBase
                         sx={{ ml: 2, flex: 1 }}
-                        placeholder="Search Employees.."
+                        placeholder="Search Vehicles.."
                         onChange={handleChange}
                     />
                     <IconButton type="button" sx={{ p: 1 }}>
@@ -96,13 +96,13 @@ export function EmployeeTag( {employee, handleEmployeeSelection} ){
                     </IconButton>
                 </Box>
             </>
-            :<EmployeeTagged employee={employee} handleEmployeeSelection={handleEmployeeSelection}/>
+            :<VehicleTagged vehicle={vehicle} handleVehicleSelection={handleVehicleSelection}/>
         }
     </div>
 
 }
 
-const EmployeeTagged = ({employee, handleEmployeeSelection})=>{
+const VehicleTagged = ({vehicle, handleVehicleSelection})=>{
 
     return <div style={{
         height: '50px',
@@ -111,23 +111,23 @@ const EmployeeTagged = ({employee, handleEmployeeSelection})=>{
         justifyContent: 'space-between',
         padding: '0 16px'
     }}>
-        <Avatar src={employee?.avatar || "../assets/user.png"}
-                // onDoubleClick={navigate("/employee/"+employee.id)} // this is buggy as hell
+        <Avatar src={vehicle?.avatar || "../assets/user.png"}
+            // onDoubleClick={navigate("/vehicle/"+vehicle.id)} // this is buggy as hell
         />
         <div style={{ marginLeft: '10px' }}>
-            <Typography variant="h5" style={{fontWeight:500}}>{`${employee.name} (${employee.id})`}</Typography>
-            <Typography variant="body2">{employee.email}</Typography>
+            <Typography variant="h5" style={{fontWeight:500}}>{`${vehicle.brandModel && vehicle.brandModel.brand.name || "No Brand"} ${vehicle.brandModel && vehicle.brandModel.name || "No Brand Model" } (${vehicle.liscence})`}</Typography>
+            <Typography variant="body2">{vehicle.power} HP | {vehicle.numchairs} Chairs | {vehicle.fuelType.name}</Typography>
         </div>
         <div >
-            <Typography variant="title">{`${employee.service && uc(employee.service.name)}`}</Typography>
+            <Typography variant="title">{`${vehicle.service && uc(vehicle.service)}`}</Typography>
         </div>
-        <IconButton onClick={() => { handleEmployeeSelection(null) }}>
+        <IconButton onClick={() => { handleVehicleSelection(null) }}>
             <CloseIcon />
         </IconButton>
     </div>
 }
 
-const OtherEmployeeTagged = ({employees, employee, handleEmployeeSelection})=>{
+const OtherVehicleTagged = ({vehicles, vehicle, handleVehicleSelection})=>{
 
     return <div style={{
         height: '60px',
@@ -136,41 +136,39 @@ const OtherEmployeeTagged = ({employees, employee, handleEmployeeSelection})=>{
         justifyContent: 'space-between',
         padding: '0 16px'
     }}>
-        <Avatar src={employee?.avatar || "../assets/user.png"}
-            // onDoubleClick={navigate("/employee/"+employee.id)} // this is buggy as hell
+        <Avatar src={vehicle?.avatar || "../assets/user.png"}
+            // onDoubleClick={navigate("/vehicle/"+vehicle.id)} // this is buggy as hell
         />
         <div style={{ marginLeft: '10px' }}>
-            <Typography variant="h5" style={{fontWeight:500}}>{`${employee.name} (${employee.id})`}</Typography>
-            <Typography variant="body2">{employee.email}</Typography>
+            <Typography variant="h5" style={{fontWeight:500}}>{`${vehicle.brandModel && vehicle.brandModel.brand.name || "No Brand"} ${vehicle.brandModel && vehicle.brandModel.name || "No Brand Model" } (${vehicle.liscence})`}</Typography>
+            <Typography variant="body2">{vehicle.power} HP | {vehicle.numchairs} Chairs | {vehicle.fuelType.name}</Typography>
         </div>
         <div >
-            <Typography variant="title">{`${employee.service && uc(employee.service.name)}`}</Typography>
+            <Typography variant="title">{`${vehicle.service && uc(vehicle.service)}`}</Typography>
         </div>
-        <IconButton onClick={() => {
-            const filteredEmployees = employees.filter(emp => emp.id !== employee.id);
-            handleEmployeeSelection(filteredEmployees)
-        }}>
+        <IconButton onClick={() => { handleVehicleSelection(null) }}>
             <CloseIcon />
         </IconButton>
     </div>
 }
 
-export function MultipleEmployeeTag({employees, handleEmployeesSelection}){
+
+export function MultipleVehicleTag({vehicles, handleVehiclesSelection}){
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const authAxios = useAuthRequest();
-    const employeeService = createEmployeeService(authAxios)
+    const vehicleService = createVehicleService(authAxios)
 
     const [searchResults, setSearchResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
     const [query, setQuery ] = useState("")
-    const [employeeCount, setEmployeeCount] = useState(0)
+    const [vehicleCount, setVehicleCount] = useState(0)
     const limit = 3;
 
     useEffect(()=>{
         const fetchData = async ()=>{
             if(query){
-                const response = await employeeService.search(query)
+                const response = await vehicleService.search(query)
                 // You can make an API call here to get the search results
                 if(response.status === 200){
                     setSearchResults(response.data);
@@ -188,11 +186,11 @@ export function MultipleEmployeeTag({employees, handleEmployeesSelection}){
         setQuery(event.target.value);
     };
     useEffect(()=>{
-        setEmployeeCount(employees.length);
-    },[employees])
+        setVehicleCount(vehicles.length);
+    },[vehicles])
 
     return <div style={{position:'relative'}}>
-        { employeeCount < limit?
+        { vehicleCount < limit?
             <>
                 {showResults && <Paper // if the search results Occur
                     style={{
@@ -203,21 +201,19 @@ export function MultipleEmployeeTag({employees, handleEmployeesSelection}){
                         zIndex: 1
                     }}>
                     {searchResults === []?<MenuItem key={69}>No Results found for {query}</MenuItem>:"" /* no idea why not work, i'm tired*/}
-                    {searchResults.map((result, index) => (
-                        <MenuItem key={index} onClick={() => {
-                            console.log("Employees : ", employees)
-                            const newEmployees = [...employees];
-                            newEmployees.push(result)
-                            handleEmployeesSelection(newEmployees)
+                    {searchResults.map(result => (
+                        <MenuItem key={result.liscence} onClick={() => {
+                            const newVehicles = [...vehicles];
+                            newVehicles.push(result)
+                            handleVehiclesSelection(newVehicles)
                             setSearchResults([])
-                            console.log("employeeCount", employeeCount);
                         }}>
                             <ListItemAvatar>
                                 <Avatar src={result?.avatar || "../assets/user.png"} />
                             </ListItemAvatar>
                             <ListItemText
                                 primary={`${result.name} (${result.id})`}
-                                secondary={`${result.service && uc(result.service.name)}`}
+                                secondary={`${result.service && uc(result.service)}`}
                             />
                             <ListItemSecondaryAction>
                                 <Typography variant="body2">{result.email}</Typography>
@@ -232,7 +228,7 @@ export function MultipleEmployeeTag({employees, handleEmployeesSelection}){
                 >
                     <InputBase
                         sx={{ ml: 2, flex: 1 }}
-                        placeholder="Search Employees.."
+                        placeholder="Search Vehicles.."
                         onChange={handleChange}
                     />
                     <IconButton type="button" sx={{ p: 1 }}>
@@ -243,8 +239,8 @@ export function MultipleEmployeeTag({employees, handleEmployeesSelection}){
             :""
         }
         <>
-            {employees.map((employee, index)=>{
-                return <OtherEmployeeTagged employees={employees} employee={employee} handleEmployeeSelection={handleEmployeesSelection}/>
+            {vehicles.map((vehicle)=>{
+                return <OtherVehicleTagged vehicles={vehicles} vehicle={vehicle} handleVehicleSelection={handleVehiclesSelection}/>
             })}
         </>
     </div>

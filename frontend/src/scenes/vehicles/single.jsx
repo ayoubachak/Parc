@@ -132,13 +132,20 @@ const Vehicle = ()=>{
                                         <Grid item xs={12}>
                                             <Avatar src={vehicle.avatar ? vehicle.avatar : '../../assets/user.png'} style={{ width: '250px', height: '250px' }} />
                                         </Grid>
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} display={"flex"} justifyContent={"center"} gap={"5px"}>
                                             <Button variant="contained" color="primary" onClick={()=>{navigate("/vehicle/"+vehicle.id+"/edit")}}>
                                                 Edit
                                             </Button>
                                             <Button variant="contained" color="secondary" onClick={()=>{setDeleted(true);console.log(deleted)}}>
                                                 Delete
                                             </Button>
+                                            <Grid item>
+                                                <Button variant="contained" color="secondary"
+                                                        onClick={()=>{console.log(vehicle);navigate("/mission/add", {state : {vehicle}})}}
+                                                >
+                                                    Send On Missions
+                                                </Button>
+                                            </Grid>
                                         </Grid>
                                     </Grid>
                                 </Grid>

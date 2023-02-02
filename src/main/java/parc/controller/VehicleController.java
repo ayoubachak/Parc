@@ -1,12 +1,12 @@
 package parc.controller;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import parc.model.concrete.*;
 import parc.repository.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/vehicles")
@@ -18,8 +18,8 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
     private final BrandRepository brandRepository;
     private final FuelTypeRepository fuelTypeRepository;
     private final CategoryRepository categoryRepository;
-
-    public VehicleController(VehicleRepository repository, ServiceRepository serviceRepository, BrandModelRepository brandModelRepository, BrandRepository brandRepository, FuelTypeRepository fuelTypeRepository, CategoryRepository categoryRepository) {
+    private final MissionOrderRepository missionOrderRepository;
+    public VehicleController(VehicleRepository repository, ServiceRepository serviceRepository, BrandModelRepository brandModelRepository, BrandRepository brandRepository, FuelTypeRepository fuelTypeRepository, CategoryRepository categoryRepository, MissionOrderRepository missionOrderRepository) {
         super(repository);
         this.repository = repository;
         this.serviceRepository = serviceRepository;
@@ -27,6 +27,8 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
         this.brandRepository = brandRepository;
         this.fuelTypeRepository = fuelTypeRepository;
         this.categoryRepository = categoryRepository;
+
+        this.missionOrderRepository = missionOrderRepository;
     }
     @GetMapping("/all")
     public List<Vehicle> all(){
@@ -160,5 +162,18 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
     @GetMapping("/count")
     public long count() {
         return repository.count();
+    }
+
+    @GetMapping("/mission/{id}")
+    public Set<Vehicle> getVehiclesByMissionId(@PathVariable Long id){
+        MissionOrder orderMission =  missionOrderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("MissionOrder with ID not found"));
+
+        return repository.findByOrderMissions(orderMission);
+    }
+
+    @GetMapping("/search")
+    public List<Vehicle> getVehicles(@RequestParam("query") String query) {
+        return repository.findByBrandModel_NameContainingIgnoreCaseOrBrandModel_Brand_NameContainingIgnoreCaseOrLiscenceContainingIgnoreCaseOrFuelType_NameContainingIgnoreCase(
+                query, query, query, query);
     }
 }
