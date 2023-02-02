@@ -26,6 +26,10 @@ public class EmployeeController extends BaseController<Employee, EmployeeReposit
     public List<Employee> all(){
         return (List<Employee>) repository.findAll();
     }
+    @GetMapping("/count")
+    public long count() {
+        return repository.count();
+    }
 
     @PostMapping("/add")
     public Employee create(@RequestBody Employee entity) {

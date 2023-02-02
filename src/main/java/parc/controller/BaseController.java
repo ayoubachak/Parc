@@ -41,9 +41,11 @@ public class BaseController<T, R extends CrudRepository<T, Long>> {
         repository.deleteById(id);
     }
 
-    @GetMapping("/count")
-    public ResponseEntity<Long> count() {
-        return new ResponseEntity<>(repository.count(), HttpStatus.OK);
-    }
+//    @GetMapping("/count")
+//    public ResponseEntity<Long> count() {
+//        long count = repository.count();
+//        return new ResponseEntity<>(count, HttpStatus.OK);
+//    }
+
 
 }
