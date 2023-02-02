@@ -1,6 +1,7 @@
 package parc.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import parc.model.concrete.*;
 import parc.repository.*;
@@ -17,8 +18,8 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
     private final BrandRepository brandRepository;
     private final FuelTypeRepository fuelTypeRepository;
     private final CategoryRepository categoryRepository;
-    private final MissionOrderRepository missionOrderRepository;
-    public VehicleController(VehicleRepository repository, ServiceRepository serviceRepository, BrandModelRepository brandModelRepository, BrandRepository brandRepository, FuelTypeRepository fuelTypeRepository, CategoryRepository categoryRepository, MissionOrderRepository missionOrderRepository) {
+
+    public VehicleController(VehicleRepository repository, ServiceRepository serviceRepository, BrandModelRepository brandModelRepository, BrandRepository brandRepository, FuelTypeRepository fuelTypeRepository, CategoryRepository categoryRepository) {
         super(repository);
         this.repository = repository;
         this.serviceRepository = serviceRepository;
@@ -26,7 +27,6 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
         this.brandRepository = brandRepository;
         this.fuelTypeRepository = fuelTypeRepository;
         this.categoryRepository = categoryRepository;
-        this.missionOrderRepository = missionOrderRepository;
     }
     @GetMapping("/all")
     public List<Vehicle> all(){
@@ -157,11 +157,8 @@ public class VehicleController extends BaseController<Vehicle, VehicleRepository
         vehicle.setCategory(category);
         return repository.save(vehicle);
     }
-
-    @GetMapping("/mission/{id}")
-    public List<Vehicle> getVehiclesByMissionId(@PathVariable Long id){
-        MissionOrder orderMission =  missionOrderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("MissionOrder with ID not found"));
-
-        return repository.findByOrderMissions(orderMission);
+    @GetMapping("/count")
+    public long count() {
+        return repository.count();
     }
 }
