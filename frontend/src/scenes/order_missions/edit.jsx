@@ -205,7 +205,7 @@ const MissionEdit = (props)=>{
                             <Card>
                                 <CardContent>
                                     <Box style={{}} >
-                                        <h1>New Mission ? </h1>
+                                        <h1>Editting Mission : {missionSubject} </h1>
                                         <Grid container spacing={3} style={{height:"400px"}}>
                                             <Grid item xs={4}>
                                                 <TableContainer component={Paper} style={borderStyle}>
@@ -321,7 +321,7 @@ const MissionEdit = (props)=>{
                                             <Button type="submit" variant="contained" color="primary">
                                                 Save
                                             </Button>
-                                            <Button variant="contained" color="secondary">
+                                            <Button variant="contained" color="secondary" onClick={()=>navigate("/missions")}>
                                                 Back
                                             </Button>
                                         </Grid>

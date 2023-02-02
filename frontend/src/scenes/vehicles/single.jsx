@@ -143,7 +143,7 @@ const Vehicle = ()=>{
                                                 <Button variant="contained" color="secondary"
                                                         onClick={()=>{console.log(vehicle);navigate("/mission/add", {state : {vehicle}})}}
                                                 >
-                                                    Send On Missions
+                                                    Send On Mission
                                                 </Button>
                                             </Grid>
                                         </Grid>
