@@ -30,6 +30,10 @@ import VehicleEdit from "./scenes/vehicles/edit";
 import Mission from "./scenes/order_missions/single";
 import MissionAdd from "./scenes/order_missions/add";
 import MissionEdit from "./scenes/order_missions/edit";
+import ConsumptionEdit from "./scenes/consumptions/edit";
+import ConsumptionAdd from "./scenes/consumptions/add";
+import ConsumptionShow from "./scenes/consumptions/single";
+import Consumption from "./scenes/consumptions/single";
 
 function App() {
     const {isAuthenticated} = useAuth()
@@ -67,6 +71,9 @@ function App() {
                     <Route path="/mission/add" element={<MissionAdd />} />
 
                     <Route path="/consumptions" element={<Consumptions />} />
+                    <Route path="/consumption/:id/edit" element={<ConsumptionEdit />} />
+                    <Route path="/consumption/add" element={<ConsumptionAdd />} />
+                    <Route path="/consumption/:id" element={<Consumption />} />
 
                 </Route>
             </Routes>

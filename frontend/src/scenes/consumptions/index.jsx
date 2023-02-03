@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import {Box, Button, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
@@ -6,7 +6,8 @@ import Header from "../../components/Header";
 import {useEffect, useState} from "react";
 import {createConsumptionService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
-import getData from "./data";
+import {getData} from "./data";
+import {useNavigate} from "react-router-dom";
 
 const Consumptions = () => {
   const theme = useTheme();
@@ -15,6 +16,7 @@ const Consumptions = () => {
   const consumptionService = createConsumptionService(authAxios);
     const [consumptions, setConsumptions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -105,6 +107,17 @@ const Consumptions = () => {
               },
             }}
           >
+              <Box
+                  m="40px 0 0 0"
+                  height="7vh"
+              >
+                  <Button variant="contained" color="secondary" onClick ={()=>{ navigate('/consumption/add')}}>
+                      Add
+                  </Button>
+                  <Button variant="contained" color="primary">
+                      Delete Selected
+                  </Button>
+              </Box>
           {isLoading ? <p>Loading...</p> :<>
             <DataGrid checkboxSelection rows={consumptions} columns={columns} />
           </>
