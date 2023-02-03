@@ -74,6 +74,8 @@ export function createConsumptionService(authAxios) {
         count: async () => await authAxios.get(`${baseURL}/api/consumptions/count`),
         all: async () => await authAxios.get(`${baseURL}/api/consumptions/all`),
         getById: async (id) => await authAxios.get(`${baseURL}/api/consumptions/${id}`),
+        addOne: async (consumption) => await authAxios.post(`${baseURL}/api/consumptions/add`, consumption),
+        edit: async (id, consumption) => await authAxios.put(`${baseURL}/api/consumptions/update/${id}`, consumption)
 
     }
 }
@@ -101,6 +103,10 @@ export function createFuelCompanyService(authAxios) {
         delete: async (id) => await authAxios.delete(`${baseURL}/fuelCompanies/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/fuelCompanies/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/fuelCompanies/count`),
+        all: async () => await authAxios.get(`${baseURL}/api/fuelCompanies/all`),
+        getById: async (id) => await authAxios.get(`${baseURL}/api/fuelCompanies/${id}`),
+
+
 
     }
 }
