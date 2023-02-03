@@ -38,7 +38,15 @@ const Consumptions = () => {
     // type:consumption.type
 
     const columns = [
-    { field: "id", headerName: "ID" },
+    {
+        field: "id",
+        headerName: "ID",
+        renderCell: (params) => (
+            <Typography onClick={()=>{navigate("/consumption/"+params.row.id)}}>
+                {params.row.id}
+            </Typography>
+        ),
+    },
       {
           field: "date",
           headerName: "Date",
@@ -80,7 +88,7 @@ const Consumptions = () => {
       <Header title="Consumptions" subtitle="List of All Consumptions" />
           <Box
             m="40px 0 0 0"
-            height="75vh"
+            height="66vh"
             sx={{
               "& .MuiDataGrid-root": {
                 border: "none",

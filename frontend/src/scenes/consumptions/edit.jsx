@@ -178,71 +178,78 @@ const ConsumptionEdit = (props)=>{
                     <Card>
                         <CardContent>
                             <form onSubmit={handleSubmit}>
-                                <Grid container spacing={3}>
+                                <Grid container spacing={3} justify="center">
                                     <Grid item xs={9}>
-                                        <Grid container direction="column" spacing={3}>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    label="Distance"
-                                                    defaultValue={distance}
-                                                    value={distance}
-                                                    type="number"
-                                                    onChange={(event) => setDistance(event.target.value)}
-                                                    variant="outlined"
-                                                    required
-                                                />
+                                        <Grid container direction="row" spacing={3}>
+                                            <Grid item xs={6}>
+                                                <Grid container direction="column" spacing={3}>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            label="Distance"
+                                                            defaultValue={distance}
+                                                            value={distance}
+                                                            type="number"
+                                                            onChange={(event) => setDistance(event.target.value)}
+                                                            variant="outlined"
+                                                            required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            label="Price"
+                                                            value={price}
+                                                            default={price}
+                                                            type="number"
+                                                            onChange={(event) => setPrice(event.target.value)}
+                                                            variant="outlined"
+                                                            required
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            label="Volume"
+                                                            value={volume}
+                                                            defaultValue={volume}
+                                                            type="number"
+                                                            onChange={(event) => setVolume(event.target.value)}
+                                                            variant="outlined"
+                                                            required
+                                                        />
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    label="Price"
-                                                    value={price}
-                                                    default={price}
-                                                    type="number"
-                                                    onChange={(event) => setPrice(event.target.value)}
-                                                    variant="outlined"
-                                                    required
-                                                />
-                                            </Grid>
-
-                                            <Grid item xs={12}>
-                                                <TextField
-                                                    label="Volume"
-                                                    value={volume}
-                                                    defaultValue={volume}
-                                                    type="number"
-                                                    onChange={(event) => setVolume(event.target.value)}
-                                                    variant="outlined"
-                                                    required
-                                                />
-                                            </Grid>
-
-
-
-                                            <Grid item xs={12}>
-                                                <TextField
-
-                                                    type="date"
-                                                    defaultValue={date}
-                                                    value={date}
-                                                    onChange={(event) => setDate(event.target.value)}
-                                                    variant="outlined"
-                                                    required
-                                                />
-                                            </Grid>
-
-                                            <Grid item xs={5}>
-                                                <Grid container direction="column" spacing={2}>
+                                            <Grid item xs={6}>
+                                                <Grid container direction="column" spacing={3}>
+                                                    <Grid item xs={12}>
+                                                        <TextField
+                                                            type="date"
+                                                            defaultValue={date}
+                                                            value={date}
+                                                            onChange={(event) => setDate(event.target.value)}
+                                                            variant="outlined"
+                                                            required
+                                                        />
+                                                    </Grid>
                                                     <Grid item xs={12}>
                                                         <FormControl variant="outlined">
-                                                            <InputLabel id="fuel-type-select-label">Select Fuel Comp</InputLabel>
+                                                            <InputLabel id="fuel-type-select-label">
+                                                                Select Fuel Comp
+                                                            </InputLabel>
                                                             <Select
                                                                 required
                                                                 labelId="fuel-company-select-label"
                                                                 value={fuelCompany.id || ""}
                                                                 style={{ minWidth: "150px" }}
-                                                                onChange={(event) => setFuelCompany({ id: event.target.value, name: lookupFuelCompanyNameById(event.target.value) || "" })}
+                                                                onChange={(event) =>
+                                                                    setFuelCompany({
+                                                                        id: event.target.value,
+                                                                        name: lookupFuelCompanyNameById(event.target.value) || "",
+                                                                    })
+                                                                }
                                                             >
-                                                                <MenuItem value="" disabled>Select Fuel Company</MenuItem>
+                                                                <MenuItem value="" disabled>
+                                                                    Select Fuel Company
+                                                                </MenuItem>
                                                                 {fuelcompanies.map((fuelCompanyOption) => (
                                                                     <MenuItem key={fuelCompanyOption.id} value={fuelCompanyOption.id}>
                                                                         {fuelCompanyOption.name}
@@ -255,26 +262,27 @@ const ConsumptionEdit = (props)=>{
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid container spacing={3} direction="row" justify="space-between">
+                                    <Grid item xs={9}>
+                                        <Grid
+                                            container
+                                            spacing={3}
+                                            display="flex"
+                                            direction="row"
+                                            justify="center"
+                                            alignItems="center"
+                                        >
                                             <Grid item>
                                                 <Button type="submit" variant="contained" color="primary">
-                                                    Edit Consumption
+                                                    Save
                                                 </Button>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="contained" color="primary"
-                                                        onClick={()=>{navigate("/consumptions")}}
-                                                >
-                                                    Back
-                                                </Button>
+                                                <Button variant="contained">Cancel</Button>
                                             </Grid>
-
                                         </Grid>
                                     </Grid>
 
                                 </Grid>
-
                             </form>
                         </CardContent>
                     </Card>

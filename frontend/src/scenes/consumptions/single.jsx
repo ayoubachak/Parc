@@ -107,19 +107,7 @@ const Consumption = ()=>{
                         <CardContent>
                             <Box mb={10}>
                                 <Grid container spacing={3} >
-                                    <Grid item xs={6} >
-                                        <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center"  style={borderStyle}>
-
-                                            <Grid item xs={12}>
-                                                <Button variant="contained" color="primary" onClick={()=>{navigate("/consumption/"+consumption.id+"/edit")}}>
-                                                    Edit
-                                                </Button>
-                                                <Button variant="contained" color="secondary" onClick={()=>{setDeleted(true);console.log(deleted)}}>
-                                                    Delete
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
+                                    <Grid item xs={3}></Grid>
                                     <Grid item xs={6}>
                                         <TableContainer component={Paper}  style={borderStyle}>
                                             <Table>
@@ -164,6 +152,17 @@ const Consumption = ()=>{
                                                 </TableBody>
                                             </Table>
                                         </TableContainer>
+                                        <Grid container direction="column" spacing={3} alignItems="center" justifyContent="center" >
+
+                                            <Grid item xs={12}>
+                                                <Button variant="contained" color="primary" onClick={()=>{navigate("/consumption/"+consumption.id+"/edit")}}>
+                                                    Edit
+                                                </Button>
+                                                <Button variant="contained" color="secondary" onClick={()=>{setDeleted(true);console.log(deleted)}}>
+                                                    Delete
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Box>
