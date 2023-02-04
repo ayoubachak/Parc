@@ -25,6 +25,7 @@ import {createUserService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import {useEffect, useContext}  from "react";
 import {AuthContext} from "../../hooks/AuthProvider";
+import EmailIcon from "@mui/icons-material/Email";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -201,7 +202,7 @@ const Sidebar = ( name, lastname ) => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Pages
+              Apps
             </Typography>
             {/*<Item*/}
             {/*  title="Profile Form"*/}
@@ -216,6 +217,13 @@ const Sidebar = ( name, lastname ) => {
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
+            />
+            <Item
+                title="Inbox"
+                to="/inbox"
+                icon={<EmailIcon />}
+                selected={selected}
+                setSelected={setSelected}
             />
             {/*<Item*/}
             {/*  title="FAQ Page"*/}

@@ -160,7 +160,7 @@ const Employee = ()=>{
                                     <Typography variant="h5">{uc(employee.service.name)}</Typography>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Button variant="contained" color="primary" onClick={()=>{navigate("/employee/"+employee.id+"/edit")}}>
+                                    <Button variant="contained" color="primary" onClick={()=>{navigate("/inbox/"+employee.id+"/send")}}>
                                         Send Email
                                     </Button>
                                     <Button variant="contained" color="secondary" onClick={()=>{navigate("/mission/add" , { state: { employee } })}}>
