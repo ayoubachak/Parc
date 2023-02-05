@@ -26,6 +26,7 @@ import useAuthRequest from "../../hooks/useAuthRequest";
 import {useEffect, useContext}  from "react";
 import {AuthContext} from "../../hooks/AuthProvider";
 import EmailIcon from "@mui/icons-material/Email";
+import {Chat} from "@mui/icons-material";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -222,6 +223,13 @@ const Sidebar = ( name, lastname ) => {
                 title="Inbox"
                 to="/inbox"
                 icon={<EmailIcon />}
+                selected={selected}
+                setSelected={setSelected}
+            />
+            <Item
+                title="Chat"
+                to="/chat"
+                icon={<Chat />}
                 selected={selected}
                 setSelected={setSelected}
             />

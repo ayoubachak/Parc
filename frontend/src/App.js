@@ -35,6 +35,7 @@ import ConsumptionAdd from "./scenes/consumptions/add";
 import ConsumptionShow from "./scenes/consumptions/single";
 import Consumption from "./scenes/consumptions/single";
 import Inbox from "./scenes/inbox";
+import Chat from "./scenes/chat";
 
 function App() {
     const {isAuthenticated} = useAuth()
@@ -80,6 +81,8 @@ function App() {
                     <Route path="/inbox/:empId/send" element={<Inbox />} />
                     <Route path="/inbox/:empId/all" element={<Inbox />} />
                     <Route path="/inbox/:id" element={<Inbox />} />
+
+                    <Route path="/chat" element={<Chat />} />
 
 
                 </Route>
