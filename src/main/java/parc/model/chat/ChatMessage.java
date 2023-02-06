@@ -1,5 +1,6 @@
 package parc.model.chat;
 import jakarta.persistence.*;
+import parc.service.chat.Status;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,6 +23,8 @@ public class ChatMessage {
     private List<String> viewedBy;
     private boolean isGroupMessage;
     private Date createdAt;
+
+    private Status status;
 
     public ChatMessage() {
     }

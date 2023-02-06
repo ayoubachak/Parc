@@ -222,6 +222,13 @@ const Sidebar = ( name, lastname ) => {
                 selected={selected}
                 setSelected={setSelected}
             />
+            <Item
+            title="Chat Test"
+            to="/chat/test"
+            icon={<Chat/>}
+            selected={selected}
+            setSelected={setSelected}
+            />
             {/*<Item*/}
             {/*  title="FAQ Page"*/}
             {/*  to="/faq"*/}
