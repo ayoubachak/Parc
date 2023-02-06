@@ -40,7 +40,7 @@ const searchWorkers = ({authRequest}) => {
                 return (<>
                     <h2>{this.resultsTitle} :</h2>
                     <>
-                        {this.searchResults.length >= 1 ? <div style={{ overflow: "scroll", paddingLeft: "15px",  display: "flex", flexDirection: "row", position:"absolute" ,bottom:"30px"}}>
+                        {this.searchResults.length >= 1 ? <div style={{  paddingLeft: "15px",  display: "flex", flexDirection: "row", position:"absolute" ,bottom:"30px"}}>
                                 {
                                     this.searchResults.map((searchResult, index) => {
                                         return (
@@ -128,7 +128,7 @@ const searchWorkers = ({authRequest}) => {
                 return (<>
                     <h2>{this.resultsTitle} :</h2>
                     {this.searchResults.length >= 1 ?
-                        <div style={{ overflow: "scroll", paddingLeft: "15px",  display: "flex", flexDirection: "row", position:"absolute" ,bottom:"-20px" }}>
+                        <div style={{  paddingLeft: "15px",  display: "flex", flexDirection: "row", position:"absolute" ,bottom:"-20px" }}>
                             {
                                 this.searchResults.map((searchResult, index) => {
                                     return (
@@ -248,9 +248,9 @@ export default function LiveSearch(){
             </IconButton>
         </Box>
         {showResults ?<>
-            <Box position="absolute" top="45px" backgroundColor={colors.primary[400]} borderRadius={5} padding={"10px"} overflow={"scroll"} height={"600px"} zIndex={100}>
+            <Box position="absolute" top="45px" backgroundColor={colors.primary[400]} borderRadius={5} padding={"10px"} overflow={"scroll"} height={"600px"} width={"100%"} zIndex={100}>
                 <h4 style={{marginLeft:"15px"}}>filters:</h4>
-                <div style={{ width: "200px", overflowX: "scroll", paddingLeft:"15px",backgroundColor:colors.primary[400] ,display:"flex",flexDirection:"row"}}>
+                <div style={{ width: "200px", paddingLeft:"15px",backgroundColor:colors.primary[400] ,display:"flex",flexDirection:"row"}}>
                     {workers.map((worker, index) => { return <div key={index}>{worker.FilterCheckbox()}</div> })}
                 </div>
                 <h1 style={{marginLeft:"15px"}}>Here are the Top Results:</h1>

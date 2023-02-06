@@ -1,7 +1,7 @@
 
 
 /*
-* Fun Fact: not all the APIs are tested :), I don't have time to test them all.
+* Fun Fact: not all the APIs are tested :), I don't have time to test,js them all.
 * I could just start testing them all, but after I made the BaseController, I tought that I can just map all the controller by extending them from the base controller. but it did not work like so.
 * Something interesting happens tho is that the name is getting mapped directly depending on the name of the model:
 * - for example if the name of the mode is Brand, all the endpoints will be mapped to /brands (it makes it lowercase and automatically makes it plural )
