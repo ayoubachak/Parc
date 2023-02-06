@@ -11,6 +11,7 @@ import parc.service.chat.FileSystemMessageService;
 import parc.service.chat.MessageService;
 import parc.service.websockets.ChatWebSocketHandler;
 import parc.service.websockets.MediaWebSocketHandler;
+import parc.service.websockets.TestTextSocketHandler;
 
 import java.nio.file.Paths;
 
@@ -28,6 +29,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(new ChatWebSocketHandler(chatMessageRepository, messageService), "/chat");
         registry.addHandler(new MediaWebSocketHandler(chatMessageRepository, messageService), "/upload");
+        registry.addHandler(new TestTextSocketHandler(), "/test");
     }
     @Bean
     public MessageService messageService(@Value("${media.root.directory}") String rootDirectory) {

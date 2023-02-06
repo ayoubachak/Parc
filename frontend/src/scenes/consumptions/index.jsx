@@ -1,7 +1,6 @@
 import {Box, Button, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import {useEffect, useState} from "react";
 import {createConsumptionService} from "../../services/services";
@@ -28,14 +27,6 @@ const Consumptions = () => {
         }
         fetchData();
     }, []);
-
-    // id:consumption.id,
-    // employee:consumption.employee?.name,
-    // startDate:consumption.startDate,
-    // endDate:consumption.endDate,
-    // missionSubject:consumption.missionSubject,
-    // remplacementEmployee:consumption.remplacementEmployee?.name, // shit that's a typo 🙈
-    // type:consumption.type
 
     const columns = [
     {

@@ -1,7 +1,5 @@
 import {Avatar, Grid, Typography, useTheme} from "@mui/material";
-import {string} from "yup";
 import {useNavigate} from "react-router-dom";
-// import { makeStyles } from '@mui/styles';
 const ucfirst = (s)=>{
     return s.toUpperCase()
 }

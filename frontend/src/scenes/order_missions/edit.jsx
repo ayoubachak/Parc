@@ -37,7 +37,6 @@ const MissionEdit = (props)=>{
     const missionService = createMissionOrderService(authAxios);
     const vehicleService = createVehicleService(authAxios);
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const navigate = useNavigate()
     const [successnotification, setSuccessNotification] = useState("");
     const [errornotification, setErrorNotification] = useState("");

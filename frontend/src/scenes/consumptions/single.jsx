@@ -2,31 +2,21 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {
     createConsumptionService,
-    createEmployeeService,
-    createFuelCompanyService,
-    createMissionOrderService,
-    createVehicleService
 } from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import {
-    Avatar,
     Box,
     Button,
     Card,
     CardContent,
     Grid,
-    IconButton,
     TableCell,
     TableContainer, TableHead, TableRow, Table, TableBody,
-    Typography,
     useTheme, Paper
 } from "@mui/material";
 
-import {tokens} from "../../theme";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import EmployeeBox from "../../components/EmployeeBox";
-import VehicleBox from "../../components/VehicleBox";
 
 
 
@@ -40,7 +30,6 @@ const Consumption = ()=>{
 
     const consumptionService = createConsumptionService(authAxios)
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const [deleted, setDeleted] = useState(false);
     const navigate = useNavigate()
     const [deletedNotification, setDeletedNotification ]= useState("")
@@ -54,11 +43,6 @@ const Consumption = ()=>{
             console.log(response.data)
             if(response.data?.id){
                 const data = response.data;
-                // setFuelCompany(data.fuelCompany);
-                // setDate(data.date.toString().slice(0, 10));
-                // setDistance(data.distance);
-                // setPrice(data.price);
-                // setVolume(data.volume);
                 setIsLoading(false);
                 setConsumption(data);
 

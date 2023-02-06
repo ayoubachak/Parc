@@ -4,7 +4,7 @@ import {
     MenuItem,
     FormControl,
     InputLabel,
-    Avatar, Card, CardContent, Grid, Typography, Button, useTheme, Stack,
+    Card, CardContent, Grid, Button, Stack,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import useAuthRequest from "../../hooks/useAuthRequest";
@@ -14,9 +14,7 @@ import {
     createFuelCompanyService,
     createConsumptionService
 } from "../../services/services";
-import {tokens} from "../../theme";
 import {useNavigate, useParams} from "react-router-dom";
-import ErrorNotification from "../../components/ErrorNotification";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
@@ -24,8 +22,6 @@ import AlertTitle from '@mui/material/AlertTitle';
 
 const ConsumptionEdit = (props)=>{
     let { id } = useParams();
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const authAxios = useAuthRequest();
 
     const fuelCompanyService = createFuelCompanyService(authAxios)

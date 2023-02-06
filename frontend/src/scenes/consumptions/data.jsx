@@ -1,5 +1,3 @@
-import {useEffect, useState} from "react";
-import useAuth from "../../hooks/useAuth";
 
 
 export const getData = async (consumptionService)=>{
@@ -13,12 +11,3 @@ export const getData = async (consumptionService)=>{
     return consumptionsMapped
 }
 
-
-export function consumptionMapping(vehicles){
-    const vehiclesMapped = [...vehicles];
-    vehiclesMapped.map((vehicle) =>{
-        vehicle.consumption = vehicle.consumption.toFixed(2);
-        return vehicle;
-    })
-    return vehiclesMapped;
-}

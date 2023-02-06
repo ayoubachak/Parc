@@ -1,5 +1,3 @@
-import {vehicleMapping} from "../vehicles/data";
-import {createMissionOrderService} from "../../services/services";
 
 
 export  async function getVehicleCount(vehicleService){

@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 const Logout = () => {
 
     const { logout } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();

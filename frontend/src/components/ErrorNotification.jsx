@@ -5,12 +5,6 @@ import {IconButton, Snackbar, useTheme} from "@mui/material";
 
 
 const ErrorNotification = ({ open, setOpen, message }) => {
-    const theme = useTheme();
-    const classes = {
-        close: {
-            padding: theme.spacing(0.5),
-        },
-    };
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
             return;

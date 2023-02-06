@@ -5,15 +5,7 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
-import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -21,9 +13,7 @@ import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined
 import FlightOutlinedIcon from "@mui/icons-material/FlightOutlined";
 import Battery50OutlinedIcon from "@mui/icons-material/Battery50Outlined";
 
-import {createUserService} from "../../services/services";
-import useAuthRequest from "../../hooks/useAuthRequest";
-import {useEffect, useContext}  from "react";
+import {useContext}  from "react";
 import {AuthContext} from "../../hooks/AuthProvider";
 import EmailIcon from "@mui/icons-material/Email";
 import {Chat} from "@mui/icons-material";
@@ -52,8 +42,7 @@ const Sidebar = ( name, lastname ) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-    const { isAuthenticated, user} = useContext(AuthContext);
-    const authAxios = useAuthRequest();
+    const { user} = useContext(AuthContext);
 
 
     return (

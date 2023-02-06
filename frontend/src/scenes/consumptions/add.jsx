@@ -4,7 +4,7 @@ import {
     MenuItem,
     FormControl,
     InputLabel,
-    Avatar, Card, CardContent, Grid, Typography, Button, useTheme, Stack,
+    Card, CardContent, Grid, Button, Stack,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import useAuthRequest from "../../hooks/useAuthRequest";
@@ -14,17 +14,13 @@ import {
     createFuelCompanyService,
     createConsumptionService
 } from "../../services/services";
-import {tokens} from "../../theme";
 import {useNavigate} from "react-router-dom";
-import ErrorNotification from "../../components/ErrorNotification";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 
 
 const ConsumptionAdd = ()=>{
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const authAxios = useAuthRequest();
 
     const fuelCompanyService = createFuelCompanyService(authAxios)

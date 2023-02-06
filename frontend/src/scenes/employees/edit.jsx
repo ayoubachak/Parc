@@ -10,7 +10,6 @@ import {
     Stack,
     TextField, useTheme
 } from "@mui/material";
-import {tokens} from "../../theme";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import {createEmployeeService, createServiceService} from "../../services/services";
 import Alert from "@mui/material/Alert";
@@ -20,8 +19,6 @@ import {useEffect, useState} from "react";
 
 
 const EmployeeEdit = ()=>{
-    const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const authAxios = useAuthRequest();
     const employeeService = createEmployeeService(authAxios);
     const servicesService = createServiceService(authAxios);

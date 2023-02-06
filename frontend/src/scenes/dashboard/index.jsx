@@ -1,8 +1,6 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-import EmailIcon from "@mui/icons-material/Email";
 
 import WorkIcon from '@mui/icons-material/Work';
 import PersonIcon from '@mui/icons-material/Person';
@@ -11,9 +9,7 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
 import useAuthRequest from "../../hooks/useAuthRequest";
 
 import {AuthContext} from "../../hooks/AuthProvider";
@@ -23,7 +19,6 @@ import {useContext, useEffect, useState} from "react";
 
 import {createEmployeeService, createVehicleService , createMissionOrderService} from '../../services/services';
 
-import getData from "./data";
 import {getVehicleCount} from "./data";
 import {getEmployeeCount} from "./data";
 import {getMissionCount} from "./data";

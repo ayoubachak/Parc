@@ -1,16 +1,13 @@
 import {Box, Button, IconButton, Typography, useTheme} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import {useEffect, useState} from "react";
 import {createEmployeeService} from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
-import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import {useNavigate} from "react-router-dom";
 import {getData} from "./data";

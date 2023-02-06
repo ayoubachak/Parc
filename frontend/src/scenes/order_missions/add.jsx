@@ -1,26 +1,20 @@
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import {useEffect, useState} from "react";
-import {createEmployeeService, createMissionOrderService, createVehicleService} from "../../services/services";
+import { createMissionOrderService } from "../../services/services";
 import useAuthRequest from "../../hooks/useAuthRequest";
 import {
-    Avatar,
     Box,
     Button,
     Card,
     CardContent,
     Grid,
-    IconButton,
     TableCell,
     TableContainer, TableHead, TableRow, Table, TableBody,
-    Typography,
     useTheme, Paper, TextField, Stack
 } from "@mui/material";
 
-import {tokens} from "../../theme";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import EmployeeBox from "../../components/EmployeeBox";
-import VehicleBox from "../../components/VehicleBox";
 import {EmployeeTag, MultipleEmployeeTag} from "../../components/EmployeeLiveSearch";
 import {VehicleTag} from "../../components/VehicleLiveSearch";
 
@@ -37,9 +31,7 @@ const MissionAdd = (props)=>{
 
     const authAxios = useAuthRequest();
     const missionService = createMissionOrderService(authAxios);
-    const vehicleService = createVehicleService(authAxios);
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
     const navigate = useNavigate()
     const [successnotification, setSuccessNotification] = useState("");
     const [errornotification, setErrorNotification] = useState("");
