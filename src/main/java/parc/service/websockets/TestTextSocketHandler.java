@@ -1,14 +1,22 @@
 package parc.service.websockets;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
 public class TestTextSocketHandler extends TextWebSocketHandler {
+    Logger LOGGER = LoggerFactory.getLogger("Token");
     public TestTextSocketHandler(){
     }
 
@@ -20,33 +28,18 @@ public class TestTextSocketHandler extends TextWebSocketHandler {
         session.sendMessage(new TextMessage("Hello " + username + ", you sent: " + message.getPayload()));
     }
 
-    private String extractUsernameFromToken(String token) {
-        try {
-            // Split the token into header and payload parts
-            String[] parts = token.split("\\.");
-            String header = parts[0];
-            String payload = parts[1];
 
-            // Base64 decode the header and payload
-            Base64 base64Url = new Base64(true);
-            byte[] headerBytes = base64Url.decode(header);
-            byte[] payloadBytes = base64Url.decode(payload);
+    private String extractUsernameFromToken(String token) throws JsonProcessingException {
+        String[] split_string = token.split("\\.");
+        String base64EncodedHeader = split_string[0];
+        String base64EncodedBody = split_string[1];
+        String base64EncodedSignature = split_string[2];
+        Base64 base64Url = new Base64(true);
 
-            // Convert the header and payload to strings
-            String headerJson = new String(headerBytes, "UTF-8");
-            String payloadJson = new String(payloadBytes, "UTF-8");
-
-            // Convert the JSON strings to maps
-            Map<String, Object> headerMap = new ObjectMapper().readValue(headerJson, Map.class);
-            Map<String, Object> payloadMap = new ObjectMapper().readValue(payloadJson, Map.class);
-
-            // Extract the "sub" from the payload
-            String username = (String) payloadMap.get("sub");
-
-            return username;
-        } catch (Exception e) {
-            // Return null if there was an error
-            return null;
-        }
+        String body = new String(base64Url.decode(base64EncodedBody));
+        LOGGER.info("JWT Body : "+body);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, String> map = mapper.readValue(body, new TypeReference<Map<String, String>>() {});
+        return map.get("sub");
     }
 }

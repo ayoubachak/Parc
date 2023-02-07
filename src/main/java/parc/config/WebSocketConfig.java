@@ -22,8 +22,8 @@ import java.nio.file.Paths;
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
     Logger LOGGER = LoggerFactory.getLogger("Logger");
-    private ChatMessageRepository chatMessageRepository;
-    private MessageService messageService;
+    private final ChatMessageRepository chatMessageRepository;
+    private final MessageService messageService;
     public WebSocketConfig(ChatMessageRepository chatMessageRepository, MessageService messageService) {
         this.chatMessageRepository = chatMessageRepository;
         this.messageService = messageService;
