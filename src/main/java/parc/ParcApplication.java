@@ -234,17 +234,17 @@ public class ParcApplication {
 //
 //            // Employees
 //            employees.deleteAll();
-//            Employee employee1 = new Employee(1L, "Driver", "John Doe", new Service(1L, "wash"),null);
-//            Employee employee2 = new Employee(2L, "Driver", "Jane Smith", new Service(2L, "maintenance"),null);
-//            Employee employee3 = new Employee(3L, "Driver", "Bob Johnson", new Service(3L, "inspection"),null);
-//            Employee employee4 = new Employee(4L, "Driver", "Emily Davis", new Service(4L, "oil change"),null);
-//            Employee employee5 = new Employee(5L, "Manager", "Michael Brown", new Service(5L, "tire rotation"),null);
-//            Employee employee6 = new Employee(6L, "Manager", "Sarah Miller", new Service(6L, "brake repair"),null);
-//            Employee employee7 = new Employee(7L, "Manager", "David Wilson", new Service(7L, "battery replacement"),null);
-//            Employee employee8 = new Employee(8L, "Manager", "Jessica Moore", new Service(8L, "transmission repair"),null);
-//            Employee employee9 = new Employee(9L, "Manager", "William Taylor", new Service(9L, "engine repair"),null);
-//            Employee employee10 = new Employee(10L, "Manager", "Ashley Anderson", new Service(10L, "detailing"),null);
-//
+//            Employee employee1 = new Employee(1L, "Driver", null,null,"John Doe", new Service(1L, "wash"),null);
+//            Employee employee2 = new Employee(2L, "Driver",null,null,"Jane Smith", new Service(2L, "maintenance"),null);
+//            Employee employee3 = new Employee(3L, "Driver",null,null, "Bob Johnson", new Service(3L, "inspection"),null);
+//            Employee employee4 = new Employee(4L, "Driver",null,null, "Emily Davis", new Service(4L, "oil change"),null);
+//            Employee employee5 = new Employee(5L, "Manager",null,null, "Michael Brown", new Service(5L, "tire rotation"),null);
+//            Employee employee6 = new Employee(6L, "Manager",null,null, "Sarah Miller", new Service(6L, "brake repair"),null);
+//            Employee employee7 = new Employee(7L, "Manager",null,null, "David Wilson", new Service(7L, "battery replacement"),null);
+//            Employee employee8 = new Employee(8L, "Manager",null,null, "Jessica Moore", new Service(8L, "transmission repair"),null);
+//            Employee employee9 = new Employee(9L, "Manager", null,null,"William Taylor", new Service(9L, "engine repair"),null);
+//            Employee employee10 = new Employee(10L, "Manager",null,null, "Ashley Anderson", new Service(10L, "detailing"),null);
+
 //            List<Employee> temployees = Arrays.asList(
 //                    employee1,
 //                    employee2,
