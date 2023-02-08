@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +20,7 @@ public class User {
     private String name;
     private String lastname;
     private String roles;
+    @CreationTimestamp
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
     private LocalDateTime lastloggedOn;

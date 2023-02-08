@@ -16,14 +16,14 @@ const baseURL = 'http://localhost:8080';
 
 export function createUserService(authAxios) {
     return {
-        getAll: async () => await authAxios.get(`${baseURL}/user/all`),
-        add: async (user) => await authAxios.post(`${baseURL}/user/add`, user),
-        update: async (id, user) => await authAxios.put(`${baseURL}/user/upd/${id}`, user),
-        delete: async (id) => await authAxios.delete(`${baseURL}/user/del/${id}`),
-        get: async (id) => await authAxios.get(`${baseURL}/user/get/${id}`),
         count: async () => await authAxios.get(`${baseURL}/user/count`),
-        me: async  ()=> await authAxios.get(`${baseURL}/user/me`)
-
+        all: async () => await authAxios.get(`${baseURL}/user/all`),
+        getById: async (id) => await authAxios.get(`${baseURL}/user/get/${id}`),
+        addOne: async (user) => await authAxios.post(`${baseURL}/user/add`, user),
+        edit: async (id, user) => await authAxios.put(`${baseURL}/user/upd/${id}`, user),
+        remove: async (id) => await authAxios.delete(`${baseURL}/user/del/${id}`),
+        delete: async (id) => await authAxios.delete(`${baseURL}/user/del/${id}`),
+        search: async (query) => await authAxios.get(`${baseURL}/user/search?query=${query}`),
     }
 }
 

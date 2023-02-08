@@ -30,6 +30,7 @@ public class ParcApplication {
         return args -> {
 //            users.deleteAll();
 //            users.save(new User("ayoub.achak01@gmail.com",encoder.encode("ayoubachak"), "Ayoub", "Achak", "ADMIN,Directeur"));
+//            users.save(new User("ayoubachak",encoder.encode("ayoubachak"), "Ayoub", "Achak", "ADMIN,Directeur"));
 
 //            // categories
 //            categories.deleteAll();

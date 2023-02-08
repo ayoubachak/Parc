@@ -16,7 +16,7 @@ import Battery50OutlinedIcon from "@mui/icons-material/Battery50Outlined";
 import {useContext}  from "react";
 import {AuthContext} from "../../hooks/AuthProvider";
 import EmailIcon from "@mui/icons-material/Email";
-import {Chat} from "@mui/icons-material";
+import {Chat, VerifiedUserOutlined} from "@mui/icons-material";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -186,7 +186,13 @@ const Sidebar = ( name, lastname ) => {
                 selected={selected}
                 setSelected={setSelected}
             />
-
+            <Item
+                title="Users"
+                to="/users"
+                icon={<VerifiedUserOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+            />
             <Typography
               variant="h6"
               color={colors.grey[300]}
