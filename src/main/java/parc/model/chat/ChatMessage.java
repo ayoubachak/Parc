@@ -1,9 +1,11 @@
 package parc.model.chat;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import parc.model.User;
+import parc.service.chat.RecipientType;
 import parc.service.chat.Status;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -11,32 +13,28 @@ import java.util.List;
 public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
 
-    private String sender;
-    private String recipient;
-    private String message;
-    private String mediaUrl;
-    private String mediaType;
-    private LocalDateTime deliveredAt;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "sender_id")
+    protected User sender;
+    @Column(name = "recipient_id")
+    protected String recipient;
+    protected RecipientType recipientType;
+    protected LocalDateTime deliveredAt;
     @ElementCollection
-    private List<String> viewedBy;
-    private boolean isGroupMessage;
-    private Date createdAt;
+    protected List<String> viewedBy;
+    @ElementCollection
+    protected List<String> deliveredTo;
 
-    private Status status;
+    @CreationTimestamp
+    protected LocalDateTime createdAt;
+    protected Status status;
+    private String message;
+    @ManyToOne(cascade = { CascadeType.ALL })
+    private MediaContent mediaContent;
 
-    public ChatMessage() {
-    }
-
-    public ChatMessage(String sender, String recipient, String message, String mediaUrl, boolean isGroupMessage, Date createdAt) {
-        this.sender = sender;
-        this.recipient = recipient;
-        this.message = message;
-        this.mediaUrl = mediaUrl;
-        this.isGroupMessage = isGroupMessage;
-        this.createdAt = createdAt;
-    }
+    public ChatMessage() {}
 
     public Long getId() {
         return id;
@@ -46,11 +44,11 @@ public class ChatMessage {
         this.id = id;
     }
 
-    public String getSender() {
+    public User getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
+    public void setSender(User sender) {
         this.sender = sender;
     }
 
@@ -62,28 +60,12 @@ public class ChatMessage {
         this.recipient = recipient;
     }
 
-    public String getMessage() {
-        return message;
+    public RecipientType getRecipientType() {
+        return recipientType;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getMediaUrl() {
-        return mediaUrl;
-    }
-
-    public void setMediaUrl(String mediaUrl) {
-        this.mediaUrl = mediaUrl;
-    }
-
-    public String getMediaType() {
-        return mediaType;
-    }
-
-    public void setMediaType(String mediaType) {
-        this.mediaType = mediaType;
+    public void setRecipientType(RecipientType recipientType) {
+        this.recipientType = recipientType;
     }
 
     public LocalDateTime getDeliveredAt() {
@@ -102,19 +84,43 @@ public class ChatMessage {
         this.viewedBy = viewedBy;
     }
 
-    public boolean isGroupMessage() {
-        return isGroupMessage;
+    public List<String> getDeliveredTo() {
+        return deliveredTo;
     }
 
-    public void setGroupMessage(boolean groupMessage) {
-        isGroupMessage = groupMessage;
+    public void setDeliveredTo(List<String> deliveredTo) {
+        this.deliveredTo = deliveredTo;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public MediaContent getMediaContent() {
+        return mediaContent;
+    }
+
+    public void setMediaContent(MediaContent mediaContent) {
+        this.mediaContent = mediaContent;
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 import parc.model.chat.ChatMessage;
-import parc.repository.ChatMessageRepository;
+import parc.repository.chat.ChatMessageRepository;
+import parc.repository.chat.MediaMessageRepository;
 import parc.service.chat.MessageService;
 
 import java.io.IOException;
@@ -20,11 +21,11 @@ public class MediaWebSocketHandler  extends BinaryWebSocketHandler {
     public final String MULTIPLE_FILES_HEADER = "multiple";
 
     private Map<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
-    private ChatMessageRepository chatMessageRepository;
-    private MessageService messageService;
+    private final MediaMessageRepository mediaMessageRepository;
+    private final MessageService messageService;
 
-    public MediaWebSocketHandler(ChatMessageRepository chatMessageRepository, MessageService messageService) {
-        this.chatMessageRepository = chatMessageRepository;
+    public MediaWebSocketHandler(MediaMessageRepository mediaMessageRepository, MessageService messageService) {
+        this.mediaMessageRepository = mediaMessageRepository;
         this.messageService = messageService;
     }
 
@@ -35,7 +36,7 @@ public class MediaWebSocketHandler  extends BinaryWebSocketHandler {
         String senderId = Objects.requireNonNull(session.getPrincipal()).getName(); // get the sender's id
         String mediaPath = generateUniqueMediaPath(senderId, mediaBytes);
         // Check if the binary message contains multiple media files
-        List<ChatMessage> chatMessages = new ArrayList<>();
+        List<ChatMessage> mediaMessages = new ArrayList<>();
         if (isMultipleMediaTypes(mediaBytes)) {
             // Extract multiple media files from the binary message
             Map<String, byte[]> mediaFiles = extractMultipleMediaFiles(mediaBytes);
@@ -50,10 +51,10 @@ public class MediaWebSocketHandler  extends BinaryWebSocketHandler {
                 messageService.storeMedia(fileBytes, filePath);
 
                 // Create a ChatMessage for each media file
-                ChatMessage chatMessage = new ChatMessage();
-                chatMessage.setMediaUrl(filePath);
-                chatMessage.setMediaType(mediaType);
-                chatMessages.add(chatMessage);
+                ChatMessage mediaMessage = new ChatMessage();
+                mediaMessage.getMediaContent().setMediaUrl(filePath);
+                mediaMessage.getMediaContent().setMediaType(mediaType);
+                mediaMessages.add(mediaMessage);
             }
         } else {
             // Extract the media type from the binary message or specify explicitly
@@ -63,14 +64,14 @@ public class MediaWebSocketHandler  extends BinaryWebSocketHandler {
             messageService.storeMedia(mediaBytes, mediaPath);
 
             // Create a ChatMessage for the media
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setMediaUrl(mediaPath);
-            chatMessage.setMediaType(mediaType);
-            chatMessages.add(chatMessage);
+            ChatMessage mediaMessage = new ChatMessage();
+            mediaMessage.getMediaContent().setMediaUrl(mediaPath);
+            mediaMessage.getMediaContent().setMediaType(mediaType);
+            mediaMessages.add(mediaMessage);
         }
 
         // Save the ChatMessages to the database
-        chatMessageRepository.saveAll(chatMessages);
+        mediaMessageRepository.saveAll(mediaMessages);
 
         // Example of sending the media to all connected clients
         for (WebSocketSession client : sessions.values()) {
