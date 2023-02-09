@@ -15,6 +15,8 @@ public class Employee {
     private String function;
     private String name;
     private String email;
+
+    private String image;
     @ManyToOne(cascade = { CascadeType.ALL })
     @JoinColumn(name = "service_id")
     private Service service;
@@ -27,13 +29,14 @@ public class Employee {
             inverseJoinColumns = @JoinColumn(name = "order_mission_id",unique = false))
     private Set<MissionOrder> orderMissions;
     public Employee(){}
-    public Employee(Long id, String function,String email, String name, Service service,Set<MissionOrder> missionOrders) {
+    public Employee(Long id, String function,String email,String image, String name, Service service,Set<MissionOrder> missionOrders) {
         this.id = id;
         this.function = function;
         this.name = name;
         this.email = email;
         this.service = service;
         this.orderMissions = missionOrders;
+        this.image = image;
     }
     public Long getId() {
         return id;
@@ -65,6 +68,14 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Service getService() {

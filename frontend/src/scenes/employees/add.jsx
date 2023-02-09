@@ -12,6 +12,7 @@ import {createEmployeeService, createServiceService} from "../../services/servic
 import {useNavigate} from "react-router-dom";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import axios from 'axios';
 
 
 
@@ -22,12 +23,16 @@ const EmployeeAdd = ()=>{
     const [isLoading, setIsLoading] = useState(true);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [image,setImage] = useState("");
+
     const [func, setFunction] = useState("");
     const [service, setService] = useState("");
     const [services, setServices] = useState([]);
     const [employee, setEmployee] = useState({});
     const [successnotification, setSuccessNotification] = useState("");
     const [errornotification, setErrorNotification] = useState("");
+
 
     // Function to handle the error, set the error message
     const handleSuccessNotification = (message) => {
@@ -62,8 +67,40 @@ const EmployeeAdd = ()=>{
         fetchData()
     }, []);
 
+
+
+    const handleFileChange = async (event) => {
+        setSelectedFile(event.target.files[0]);
+        setImage(event.target.files[0].name);
+        console.log(image);
+
+    };
+
+
+
+    const handleUpload =  async (event) => {
+
+
+        if (!selectedFile) return;
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        if(selectedFile)
+
+        try {
+            const response = employeeService.upload_file(formData);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     useEffect(() => {
+        handleUpload()
         const addEmployee = async ()=>{
+
+
             if (employee.name && employee.email && employee.function && employee.service) {
                 console.log("Adding the employee")
                 const response = await employeeService.addOne(employee);
@@ -84,16 +121,24 @@ const EmployeeAdd = ()=>{
             }
         };
         addEmployee()
-    }, [employee])
+    }, [selectedFile,employee])
+    const inputFileStyle = {
+        border: "1px solid gray",
+        padding: "10px",
+        borderRadius: "5px"
+}
 
     const handleSubmit = (event) => {
         event.preventDefault();
         setEmployee({
             name: name,
             email: email,
+            image : image,
             function: func,
             service: service,
+
         });
+
     };
 
 
@@ -140,6 +185,17 @@ const EmployeeAdd = ()=>{
                                                 variant="outlined"
                                                 required
                                             />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <div className="custom-file-input">
+                                                <input
+                                                    type="file"
+                                                    style={inputFileStyle}
+                                                    onChange={handleFileChange}
+                                                    required
+                                                />
+                                                <p>{selectedFile ? selectedFile.name : "Choose a profile picture"}</p>
+                                            </div>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <FormControl variant="outlined">

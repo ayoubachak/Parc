@@ -83,7 +83,7 @@ export function createEmployeeService(authAxios) {
     return {
         getAll: async () => await authAxios.get(`${baseURL}/employees`),
         add: async (employee) => await authAxios.post(`${baseURL}/employees`, employee),
-        update: async (id, employee) => await authAxios.put(`${baseURL}/employees/${id}`, employee),
+        update: async (id, employee,file) => await authAxios.put(`${baseURL}/employees/${id}`, employee),
         delete: async (id) => await authAxios.delete(`${baseURL}/employees/${id}`),
         get: async (id) => await authAxios.get(`${baseURL}/employees/${id}`),
         count: async () => await authAxios.get(`${baseURL}/api/employees/count`),
@@ -93,6 +93,11 @@ export function createEmployeeService(authAxios) {
         edit: async (id, employee) => await authAxios.put(`${baseURL}/api/employees/update/${id}`, employee),
         remove: async (id) => await authAxios.delete(`${baseURL}/employees/${id}`),
         search: async (query) => await authAxios.get(`${baseURL}/api/employees/search?query=${query}`),
+        upload_file: async (file) => await authAxios.post(`${baseURL}/api/employees/upload`,file, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
     }
 }
 export function createFuelCompanyService(authAxios) {
