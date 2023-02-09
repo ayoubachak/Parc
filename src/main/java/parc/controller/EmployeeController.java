@@ -108,8 +108,7 @@ public class EmployeeController extends BaseController<Employee, EmployeeReposit
         } catch (IOException e) {
             System.out.println("File not uploaded");
         }
-
-
     }
+
 }
 

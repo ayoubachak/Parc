@@ -16,7 +16,7 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import {useNavigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-
+import defaultAvatar from '../../assets/user.png';
 
 const EmployeeEdit = ()=>{
     const authAxios = useAuthRequest();
@@ -27,10 +27,12 @@ const EmployeeEdit = ()=>{
     const [email, setEmail] = useState("");
     const [func, setFunction] = useState("");
     const [service, setService] = useState("");
-  const [value1,setValue]=useState("user.png");
+    const [defaultImage ,setDefaultImage]=useState(defaultAvatar);
+
     const [services, setServices] = useState([]);
     const [employee, setEmployee] = useState({});
     const [selectedFile, setSelectedFile] = useState(null);
+
     const [image,setImage] = useState("");
     const [successnotification, setSuccessNotification] = useState("");
     const [errornotification, setErrorNotification] = useState("");
@@ -82,7 +84,7 @@ const EmployeeEdit = ()=>{
             setEmail(response.data.email)
             setFunction(response.data["function"])
             setService(response.data.service)
-            setValue(response.data.image)
+            setImage(response.data.image)
             console.log(image)
             console.log(employee)
             console.log(employee.name)
@@ -92,10 +94,6 @@ const EmployeeEdit = ()=>{
         fetchData();
     }, [isLoading]);
 
-    const imageName = value1 ;
-    let imagePath = `./employees_pic/${imageName}`;
-    if(!imagePath)
-        imagePath="../../assets/user.png"
 
     const handleFileChange = async (event) => {
         // setSelectedFile(event.target.files[0]);
@@ -193,7 +191,7 @@ const EmployeeEdit = ()=>{
                             <form onSubmit={handleSubmit}>
                                 <Grid container spacing={3} direction="row">
                                     <Grid item xs={3} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                        <Avatar src={require(`${imagePath}`)} style={{ width: '150px', height: '150px' }} />
+                                        <Avatar src={`${ (image && `./employees_pic/${image}`) || defaultImage}`} style={{ width: '150px', height: '150px' }} />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <Grid container direction="column" spacing={3}>

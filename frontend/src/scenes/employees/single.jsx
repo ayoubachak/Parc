@@ -16,6 +16,7 @@ import {DataGrid} from "@mui/x-data-grid";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
+import defaultAvatar from '../../assets/user.png';
 
 const uc = (s)=>{
     return s.toUpperCase()
@@ -72,10 +73,7 @@ const Employee = ()=>{
         fetchData();
     }, []);
 
-    const imageName = employee.image;
-   let imagePath = `./employees_pic/${imageName}`;
-    if(!imagePath)
-        imagePath="../../assets/user.png"
+   let imagePath = (employee.image && `./employees_pic/${employee.image}`) || defaultAvatar;
 
     useEffect(() => {
         const fetchData = async () =>{
@@ -157,7 +155,7 @@ const Employee = ()=>{
                         <CardContent>
                             <Grid container spacing={3}>
                                 <Grid item xs={3}>
-                                    <Avatar src={require(`${imagePath}`)}style={{ width: '100px', height: '100px' }} />
+                                    <Avatar src={imagePath || defaultAvatar}style={{ width: '100px', height: '100px' }} />
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Typography variant="h2" style={{fontWeight:600}}>{employee.name} ({employee.id})</Typography>
